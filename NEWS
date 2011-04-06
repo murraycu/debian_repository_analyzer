@@ -1,0 +1,86 @@
+0.2.2:
+
+* Reduce the licenses automatically again. I had turned that off for quicker 
+  debugging.
+
+0.2.0:
+
+* The script is now in a self-contained .glom file.
+  Just open the .glom example file, save a new .glom file, 
+  go to the package details page, and click Begin Scan.
+
+0.1.8:
+
+* script: Increase the number of matches for standard licenses by:
+  - Comparing after simplifying all whitespace.
+  - Searching for a smaller more-common part of the BSD license text.
+  - Adding a version of the BSD licenses with alternate bullet-point formatting.
+  - Adding GPL version 1.
+
+0.1.7:
+
+* script: Attempt to detect standard licenses, to identify similar 
+  licenses and to automatically provide their names in the 
+  description field.
+  See standard_licenses.py for the text fragments.
+
+0.1.6:
+
+* Glom file:
+  - Packages: The Open Diff button now works. Previously it had 
+  saved the .diff.gz file as a .tar.gz, and then failed 
+  to open that.
+  - Licenses: The Remove Duplicate button now shows the 
+  license description as well as the ID, and the IDs are always 
+  numerically sorted.
+ 
+* Script:
+  - Find some extra license filenames.
+  - Read non-ASCII (UTF-8, latin-1, etc) license texts.
+  - Strip leading and trailing whitespace from licenses.
+  - Do not automatically simplify "unknown" error messages 
+    in license texts, though there are no longer any errors 
+    for any of the packages in the test repository.
+  
+0.1.5:
+
+* Glom file: Packages:
+  Dependencies and Dependency Of related records portals:
+  - Put them into notebook tabs, so that the window size 
+  can be smaller.
+  - Show the license description on each row.
+  - Use the new Glom 1.1.6 feature to specify that the 
+  row open buttons takes you to the package record, not 
+  the license record.
+* script: Show the total reduced number of licenses texts
+  when finished, so we can see how many were simplified.
+
+0.1.4:
+
+* Make sure that diff_uri is always full, even when it is 
+not used to get a license.
+* Add commented-out code about the better way to get the 
+full URI, instead of the hack that we must use for now.
+
+0.1.3:
+
+* When taking the license file from a tarball, 
+  prefer license files that are higher up in the 
+  directory structure.
+* After finding all license files, use Python's 
+  SequenceMatcher to try to find near duplicates,
+  and the common text instead.
+* Nested bz2 archives (inside the main tarball/bz2) are 
+  now used as well as just nested .tar.gz files.
+* If no license was found in the source tarball, try to 
+  find the license in the diff file (used to create debian/).
+* Database structure:
+  - Addedfields to licenses table to indicate:
+    - Dynamic linking requires source release. (checkbox)
+    - Static linking requires source release. (checkbox)
+    - Modifications must be released. (checkbox)
+    - Credit required (text description of requirement)
+   (These must be set by humans.)
+
+
+0.1.0:
