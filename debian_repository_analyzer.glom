@@ -1,13 +1,1906 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<glom_document database_title="Repository Analyzer" is_example="true" translation_original_locale="en_US">
-  <connection database="glom_repositoryanalyzer2817111" server="localhost"/>
-  
-  
-  
-<table name="licenses" title="Licenses"><fields><field name="license_id" primary_key="true" unique="true" type="Number" title="License ID"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related="true"/></field><field name="description" type="Text" title="Description"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="open_source" default_value="FALSE" type="Boolean" title="Open Source"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="license_text" type="Text" title="License Text"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6"/></field><field name="dynamic_linking_requires_source" default_value="FALSE" type="Boolean" title="Dynamic Linking Requires Source Release"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="static_linking_requires_source" default_value="FALSE" type="Boolean" title="Static Linking Requires Source Release"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="modifications_must_be_released" default_value="FALSE" type="Boolean" title="Modifications Must Be Released"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="credit_required" type="Text" title="Credit Required"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="per_seat_license" type="Boolean" title="Per Seat License"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field></fields><relationships><relationship name="packages" key="license_id" other_table="packages" other_key="license_id" title="Packages"/></relationships><data_layouts><data_layout name="list" parent_table="licenses"><data_layout_groups><data_layout_group name="main" columns_count="1" sequence="1"><data_layout_item name="license_id" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/><title_custom/></data_layout_item><data_layout_item name="open_source" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" editable="true" use_default_formatting="true" sequence="3"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group></data_layout_groups></data_layout><data_layout name="details" parent_table="licenses"><data_layout_groups><data_layout_group name="main" columns_count="1" sequence="1"><data_layout_group name="overview" columns_count="2" sequence="1" title="Overview"><data_layout_item name="license_id" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group><data_layout_group name="details" columns_count="2" sequence="2" title="Details"><data_layout_item name="description" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_group name="button_group" columns_count="1" sequence="2"><data_layout_button script="# example helloworld.py&#10;&#10;import pygtk&#10;pygtk.require('2.0')&#10;import gtk&#10;&#10;class DuplicateChooserWindow(gtk.Dialog):&#10;&#10;    def __init__(self, current_license_id):    &#10;        # Call the base class's constructor, because python doesn't do that automatically:&#10;        gtk.Dialog.__init__(self)&#10;&#10;        # Sets the border width of the window.&#10;        self.set_border_width(6)&#10;        self.vbox.set_border_width(6)&#10;    &#10;&#10;        # Add a label&#10;        label = gtk.Label(&quot;Current License ID: %s&quot; % current_license_id)&#10;        label.set_alignment(0.0, 0.5)&#10;        self.vbox.pack_start(label)&#10;        label.show()&#10;&#10;        #Pack an hbox in the dialog's vbox area:&#10;        self.hbox = gtk.HBox()&#10;        self.hbox.set_spacing(6)&#10;        self.vbox.pack_start(self.hbox, False, False)&#10;        self.hbox.show()&#10;&#10;        label = gtk.Label(&quot;Duplicate License:&quot;)&#10;        label.set_alignment(0.0, 0.5)&#10;        self.hbox.pack_start(label, False, False)&#10;        label.show()&#10;&#10;        #ComboBox:&#10;        self.combo_model = gtk.ListStore(int, str) #An ID column (0) and a description column (1)&#10;        self.combo_model_sorted = gtk.TreeModelSort(self.combo_model) &#10;        self.combo_model_sorted.set_sort_column_id(0, gtk.SORT_ASCENDING) #Sort by ID.&#10;        self.combo = gtk.ComboBox(self.combo_model_sorted)&#10;&#10;        #ComboBox ID column:&#10;        cell = gtk.CellRendererText()&#10;        self.combo.pack_start(cell, True)&#10;        self.combo.add_attribute(cell, 'text', 0)  &#10;&#10;        #ComboBox Description column:&#10;        cell = gtk.CellRendererText()&#10;        self.combo.pack_start(cell, True)&#10;        self.combo.add_attribute(cell, 'text', 1) &#10;&#10;&#10;        self.hbox.pack_start(self.combo, False, False)&#10;        self.combo.show()&#10;        self.fill_combo()&#10;&#10;        #Add response buttons:&#10;        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)&#10;        self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)&#10;&#10;        #Make sure that clicking the window manager close button actually closes the window:&#10;        self.connect(&quot;delete_event&quot;, self.delete_event)&#10;&#10;&#10;    def get_chosen_license_id(self):&#10;        sort_model_iter = self.combo.get_active_iter() &#10;        if(sort_model_iter == None):&#10;            return None;&#10;&#10;        model_iter = self.combo_model_sorted.convert_iter_to_child_iter(None, sort_model_iter) #None is a necessary parameter, caused by a pygtk backwards-compatibilty issue. It's normal.&#10;        if(model_iter == None):&#10;            return None;&#10;&#10;        val_id = self.combo_model[model_iter][0] #The ID.&#10;        print val_id&#10;        return val_id&#10;&#10;&#10;    def fill_combo(self):&#10;        query = &quot;SELECT \&quot;license_id\&quot;, \&quot;description\&quot; FROM %s&quot; % record.table_name #&quot;licenses&quot;&#10;        command = gda.Command(query)&#10;        data_model = record.connection.execute_single_command(command)&#10;&#10;        if(data_model and data_model.get_n_rows() and data_model.get_n_columns()):&#10;            col_index_id = 0 #Note: hard-coded.&#10;            col_index_description = 1 #Note: hard-coded.&#10;            for row_index in range(data_model.get_n_rows()):&#10;                val_id = data_model.get_value_at(col_index_id, row_index).get()&#10;                val_description = data_model.get_value_at(col_index_description, row_index).get()&#10;&#10;                self.combo_model.append([val_id, val_description])&#10;&#10;    def delete_event(self, widget, event, data=None):&#10;        self.response(gtk.RESPONSE_CANCEL)&#10;        return True #Do not destroy the window.&#10;&#10;&#10;def main():&#10;    &#10;    current_license_id = &quot;%d&quot; % record[&quot;license_id&quot;]&#10;&#10;    #Show the dialog:&#10;    question_window = DuplicateChooserWindow(current_license_id)&#10;    response = question_window.run()&#10;    question_window.hide()&#10;&#10;    if(response != gtk.RESPONSE_OK):&#10;        return&#10;&#10;    #Get the input:&#10;    chosen_license_id = question_window.get_chosen_license_id()&#10;    if(chosen_license_id == None):&#10;        return&#10;&#10;    print &quot;debug: current_license_id=%s, chosen_license_id=%s&quot; % (current_license_id, chosen_license_id)&#10;&#10;    if(chosen_license_id == current_license_id):&#10;        messagedialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, message_format=&quot;ID values match&quot;, buttons=gtk.BUTTONS_OK)&#10;        messagedialog.format_secondary_text(&quot;The chosen license ID is the same as the current license ID. Please choose another license ID&quot;)&#10;        messagedialog.run()&#10;        messagedialog.hide()&#10;        messagedialog.destroy() #This is horrible. pygtk/python shouldn't require us to explicitly destroy things.&#10;        return&#10;&#10;    #Change any uses of the current license id in packages:&#10;    query = &quot;UPDATE \&quot;packages\&quot; SET \&quot;license_id\&quot; = '%s' WHERE \&quot;packages\&quot;.\&quot;license_id\&quot;='%s'&quot; % (chosen_license_id, current_license_id)&#10;    print &quot;debug: %s&quot; % query&#10;    command = gda.Command(query)&#10;    record.connection.execute_single_command(command)&#10;&#10;    #Delete the current license record (because it is no longer used):&#10; &#10;    licenses_table_name = record.table_name #&quot;licenses&quot;&#10;    query = &quot;DELETE FROM \&quot;%s\&quot; WHERE \&quot;%s\&quot;.\&quot;license_id\&quot; = '%s'&quot; % (licenses_table_name, licenses_table_name, current_license_id)&#10;    print &quot;debug: %s&quot; % query&#10;    command = gda.Command(query)&#10;    record.connection.execute_single_command(command)&#10;&#10;# If the program is run directly or passed as an argument to the python&#10;# interpreter then create a HelloWorld instance and show it&#10;if __name__ == &quot;__main__&quot;:&#10;    main()&#10;&#10;   &#10;    &#10;&#10; &#10;" title="Remove As Duplicate" sequence="1"/><data_layout_text sequence="2"><text/></data_layout_text></data_layout_group><data_layout_group name="characteristics" columns_count="1" sequence="3" title="Characteristics"><data_layout_item name="open_source" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="dynamic_linking_requires_source" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="static_linking_requires_source" editable="true" use_default_formatting="true" sequence="3"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="modifications_must_be_released" editable="true" use_default_formatting="true" sequence="4"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="credit_required" editable="true" use_default_formatting="true" sequence="5"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="per_seat_license" editable="true" use_default_formatting="true" sequence="6"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group></data_layout_group><data_layout_item name="license_text" editable="true" use_default_formatting="true" sequence="3"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_portal relationship="packages" name="" columns_count="1" sequence="4"><data_layout_item name="name" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_portal></data_layout_group></data_layout_groups></data_layout></data_layouts><reports/>
+<glom_document xmlns="http://glom.org/glom_document" database_title="Repository Analyzer" is_example="true" translation_original_locale="en_US" format_version="6">
+  <connection database="glom_repositoryanalyzer2817111" server="localhost" hosting_mode="postgres_self" port="5434" try_other_ports="false"/>
+  <table name="licenses" title="Licenses">
+    <example_rows/>
+    <fields>
+      <field name="license_id" primary_key="true" unique="true" type="Number" title="License ID">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related="true" choices_related_show_all="true"/>
+      </field>
+      <field name="description" type="Text" title="Description">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="open_source" default_value="FALSE" type="Boolean" title="Open Source">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+      <field name="license_text" type="Text" title="License Text">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="dynamic_linking_requires_source" default_value="FALSE" type="Boolean" title="Dynamic Linking Requires Source Release">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+      <field name="static_linking_requires_source" default_value="FALSE" type="Boolean" title="Static Linking Requires Source Release">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+      <field name="modifications_must_be_released" default_value="FALSE" type="Boolean" title="Modifications Must Be Released">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+      <field name="credit_required" type="Text" title="Credit Required">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="per_seat_license" default_value="FALSE" type="Boolean" title="Per Seat License">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+    </fields>
+    <relationships>
+      <relationship name="packages" key="license_id" other_table="packages" other_key="license_id" title="Packages"/>
+    </relationships>
+    <data_layouts>
+      <data_layout name="list" parent_table="licenses">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_item name="license_id" use_default_formatting="true">
+              <title_custom/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="open_source" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="description" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+      <data_layout name="details" parent_table="licenses">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+            </data_layout_group>
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="description" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_group name="button_group">
+                <data_layout_button title="Remove As Duplicate">
+                  <script># example helloworld.py
 
-</table><table name="package_dependencies" hidden="true" title="Package Dependencies"><fields><field name="package_dependencies_id" primary_key="true" unique="true" auto_increment="true" type="Number" title="package_dependencies ID"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="package_name" type="Text" title="Package"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related="true" choices_related_relationship="package" choices_related_field="name" choices_related_second="comments"/></field><field name="parent_package_name" type="Text" title="Parent Package"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field></fields><relationships><relationship name="package" key="package_name" other_table="packages" other_key="name" title="Package"/><relationship name="parent_package" key="parent_package_name" other_table="packages" other_key="name" title="Parent Package"/></relationships><data_layouts><data_layout name="details" parent_table="package_dependencies"><data_layout_groups><data_layout_group name="main" columns_count="1" sequence="1"><data_layout_group name="overview" columns_count="2" sequence="1" title="Overview"><data_layout_item name="package_dependencies_id" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group><data_layout_group name="details" columns_count="2" sequence="2" title="Details"><data_layout_item name="parent_package_name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_group name="package" columns_count="1" sequence="2"><data_layout_item name="package_name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="name" relationship="package" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group></data_layout_group></data_layout_group></data_layout_groups></data_layout></data_layouts><reports/>
+import pygtk
+pygtk.require('2.0')
+import gtk
 
-</table><table name="packages" default="true" title="Packages"><fields><field name="name" primary_key="true" unique="true" type="Text" title="Name"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="comments" type="Text" title="Comments"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related="true"/></field><field name="description" type="Text" title="Description"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related="true"/></field><field name="license_id" type="Number" title="License ID"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related="true" choices_related_relationship="license" choices_related_field="license_id" choices_related_second="description"/></field><field name="version" type="Text" title="Version"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="parent_package" type="Text" title="Parent Package"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="tarball_uri" type="Text" title="Tarball URI"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="diff_uri" type="Text" title="Diff URI"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field><field name="licensed_simplified" default_value="FALSE" type="Boolean" title="Licenses Simplified Automatically"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></field></fields><relationships><relationship name="dependencies" key="name" other_table="package_dependencies" other_key="parent_package_name" auto_create="true" allow_edit="true" title="Dependencies"/><relationship name="license" key="license_id" other_table="licenses" other_key="license_id" title="License"/><relationship name="dependency of" key="name" other_table="package_dependencies" other_key="package_name" title="Dependency Of"/></relationships><data_layouts><data_layout name="details" parent_table="package"><data_layout_groups><data_layout_group name="main" columns_count="1" sequence="1"><data_layout_group name="overview" columns_count="2" sequence="1" title="Overview"><data_layout_item name="name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group><data_layout_group name="details" columns_count="1" sequence="2" title="Details"><data_layout_item name="description" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_group name="license" columns_count="1" sequence="2" title="License"><data_layout_item name="license_id" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group></data_layout_group><data_layout_group name="Dependencies" columns_count="1" sequence="3"><data_layout_portal relationship="dependencies" name="" columns_count="1" sequence="1"><data_layout_item name="package_name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" relationship="package" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_portal></data_layout_group></data_layout_group></data_layout_groups></data_layout><data_layout name="list" parent_table="packages"><data_layout_groups><data_layout_group name="main" columns_count="1" sequence="1"><data_layout_item name="name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="version" editable="true" use_default_formatting="true" sequence="3"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group></data_layout_groups></data_layout><data_layout name="details" parent_table="packages"><data_layout_groups><data_layout_group name="main" columns_count="1" sequence="1"><data_layout_group name="overview" columns_count="2" sequence="1" title="Overview"><data_layout_item name="name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_button script="#!/usr/bin/env python&#10;&#10;#&#10;# Copyright (c) 2006 Openismus GmbH&#10;#&#10;# This program is free software; you can redistribute it and/or modify&#10;# it under the terms of the GNU General Public License as published by&#10;# the Free Software Foundation; either version 2 of the License, or&#10;# (at your option) any later version.&#10;#&#10;# This program is distributed in the hope that it will be useful,&#10;# but WITHOUT ANY WARRANTY; without even the implied warranty of&#10;# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#10;# GNU General Public License for more details.&#10;#&#10;# You should have received a copy of the GNU General Public License&#10;# along with PythonCAD; if not, write to the Free Software&#10;# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA&#10;#&#10;&#10;import gtk&#10;import gda&#10;&#10;import apt # For apt.Cache.&#10;import apt_pkg # For apt_pkg.GetPkgSourceList&#10;import sys&#10;import os&#10;import difflib&#10;&#10;class DebugWindow:&#10;    debug_window = None&#10;    debug_textview = None&#10;    debug_button_close = None&#10;&#10;    def __init__(self):&#10;        #print &quot;debug: Creating debug window.&quot;&#10;        self.debug_window = gtk.Window()&#10;        vbox = gtk.VBox()&#10;        vbox.set_spacing(6)&#10;        vbox.show()&#10;        self.debug_window.add(vbox);&#10;&#10;        scrolledwindow = gtk.ScrolledWindow()&#10;        scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)&#10;        scrolledwindow.show()&#10;        vbox.pack_start(scrolledwindow)&#10;&#10;        self.debug_textview = gtk.TextView()&#10;        self.debug_textview.show()&#10;        scrolledwindow.add(self.debug_textview) #We don't need to use add_with_viewport() with a TextView.&#10;       &#10;        hbox = gtk.HBox()&#10;        hbox.show()&#10;        vbox.pack_start(hbox, False, False)&#10;&#10;        self.debug_button_close = gtk.Button(stock=gtk.STOCK_CLOSE)&#10;        self.debug_button_close.set_sensitive(False) #Only let the user close this window when we are finished.&#10;        self.debug_button_close.show()&#10;        hbox.pack_end(self.debug_button_close, False, False)&#10;&#10;        self.debug_button_close.connect(&quot;clicked&quot;, self.on_debug_button_clicked, None)&#10;      &#10;        self.debug_window.set_default_size(400, 400) #Make it big enough.&#10;        self.debug_window.set_title(u&quot;Repository Analyzer debug output&quot;)&#10;&#10;    def append_text(self, text):&#10;        #Add the text to the window:&#10;        textbuffer = self.debug_textview.get_buffer()&#10;        enditer = textbuffer.get_end_iter()&#10;        textbuffer.insert(enditer, text + &quot;\n&quot;)&#10;&#10;        #Make sure the the last message is always visible:&#10;        enditer = textbuffer.get_end_iter()&#10;        self.debug_textview.scroll_to_iter(enditer, 0)&#10;&#10;        #Update the UI even during intensive processing:&#10;        self.refresh_ui()&#10;&#10;    def refresh_ui(self):&#10;        while gtk.events_pending():&#10;            gtk.main_iteration()&#10;&#10;    def on_debug_button_clicked(self, *args):&#10;        self.debug_window.destroy()&#10;&#10;&#10;&#10;debugwindow = DebugWindow()&#10;&#10;def print_debug(text):&#10;&#10;    debugwindow.debug_window.show() #Only show it when we first use it. TODO: How will it be destroyed if the button is never clicked, because it is never shown?&#10;    debugwindow.append_text(text)&#10;&#10;    #print(text)&#10;&#10;class StandardLicenses(object):&#10;&#10;    def __init__(self):&#10;&#10;        self.license_dict = {}&#10;&#10;        license_name_gpl1 = u&quot;GPL1&quot;&#10;        license_text_gpl1 = u&quot;GNU GENERAL PUBLIC LICENSE\n       Version 1, February 1989&quot;  #We stop the extract here, because there are versions with different FSF addresses.&#10;        self.add_license(license_name_gpl1, license_text_gpl1);&#10;&#10;        license_name_gpl2 = u&quot;GPL2&quot;&#10;        license_text_gpl2 = u&quot;GNU GENERAL PUBLIC LICENSE\n&#9;&#9;       Version 2, June 1991&quot;  #We stop the extract here, because there are versions with different FSF addresses.&#10;        self.add_license(license_name_gpl2, license_text_gpl2);&#10;&#10;        license_name_lgpl2 = u&quot;LGPL2&quot;&#10;        license_text_lgpl2 = u&quot;GNU LIBRARY GENERAL PUBLIC LICENSE\n&#9;&#9;       Version 2, June 1991&quot;  #We stop the extract here, because there are versions with different FSF addresses.&#10;        self.add_license(license_name_lgpl2, license_text_lgpl2);&#10;&#10;        license_name_lgpl2p1 = u&quot;LGPL2.1&quot;&#10;        license_text_lgpl2p1 = u&quot;GNU LESSER GENERAL PUBLIC LICENSE\n&#9;&#9;       Version 2.1, February 1999&quot; #We stop the extract here, because there are versions with different FSF addresses.&#10;        self.add_license(license_name_lgpl2p1, license_text_lgpl2p1);&#10;&#10;        license_name_mpl = u&quot;MPL&quot;&#10;        license_text_mpl = u&quot;MOZILLA PUBLIC LICENSE&quot;&#10;        self.add_license(license_name_mpl, license_text_mpl);&#10;&#10;        license_name_boost = u&quot;Boost&quot;&#10;        license_text_boost = u&quot;Boost Software License - Version 1.0 - August 17th, 2003&quot;&#10;        self.add_license(license_name_boost, license_text_boost);&#10;&#10;        license_name_mit = u&quot;MIT&quot;&#10;        license_text_mit = u&quot;&quot;&quot;Permission is hereby granted, free of charge, to any person&#10;obtaining a copy of this software and associated documentation&#10;files (the \&quot;Software\&quot;), to deal in the Software without&#10;restriction, including without limitation the rights to use,&#10;copy, modify, merge, publish, distribute, sublicense, and/or sell&#10;copies of the Software, and to permit persons to whom the&#10;Software is furnished to do so, subject to the following conditions&quot;&quot;&quot;&#10;        self.add_license(license_name_mit, license_text_mit);&#10;&#10;        license_name_x11 = u&quot;X11&quot; #Seems to be different to MIT. Sometimes mentions Keith Packard explicitly.&#10;        license_text_x11 = u&quot;&quot;&quot;Permission to use, copy, modify, distribute, and sell this software and its&#10;documentation for any purpose is hereby granted without fee, provided that&#10;the above copyright notice appear in all copies and that both that&#10;copyright notice and this permission notice appear in supporting&#10;documentation&quot;&quot;&quot; #Stop here, before an additional explicit name mention, forbidding use of the author's name, usually Keith Packard.&#10;        self.add_license(license_name_x11, license_text_x11);&#10;&#10;        license_name_bsd = u&quot;BSD&quot;&#10;        license_text_bsd = u&quot;&quot;&quot;Redistribution and use in source and binary forms, with or without&#10;modification, are permitted provided that the following conditions&#10;are met:&#10;1. Redistributions of source code must retain the above copyright&#10;   notice, this list of conditions and the following disclaimer.&#10;2. Redistributions in binary form must reproduce the above copyright&#10;   notice, this list of conditions and the following disclaimer in the&#10;   documentation and/or other materials provided with the distribution.&quot;&quot;&quot; #Stop here, before mention of a specific organisation name, usually forbidding use of that name.&#10;        self.add_license(license_name_bsd, license_text_bsd);&#10;&#10;        license_name_bsd_alt = u&quot;BSD_alternate&quot; #Almost identical - just uses - instead of 1. and 2.&#10;        license_text_bsd_alt = u&quot;&quot;&quot;Redistribution and use in source and binary forms, with or without&#10;modification, are permitted provided that the following conditions&#10;are met:&#10;&#10;- Redistributions of source code must retain the above copyright&#10;notice, this list of conditions and the following disclaimer.&#10;&#10;- Redistributions in binary form must reproduce the above copyright&#10;notice, this list of conditions and the following disclaimer in the&#10;documentation and/or other materials provided with the distribution.&quot;&quot;&quot; #Stop here, before mention of a specific organisation name, usually forbidding use of that name.&#10;        self.add_license(license_name_bsd_alt, license_text_bsd_alt);&#10;&#10;    def add_license(self, name, text):&#10;        self.license_dict[name] = self.remove_excess_whitespace(text);&#10;&#10;&#10;    def remove_excess_whitespace(self, text):&#10;        return u&quot; &quot;.join(text.split()) #remove multiple white spaces and new lines, tabs etc. and replace by a single whitespace&#10;&#10;    def get_is_standard_license(self, text):&#10;        #Look for each of the licenses texts (part of them, anyway) in the given text,&#10;        #and return the name of any standard license found.&#10;        for key in self.license_dict.keys():&#10;            standard_license_text = self.license_dict[key]&#10;            pos = self.remove_excess_whitespace(text).find(standard_license_text)&#10;            if((pos != -1) and (pos &lt; 200)): #If the starting text appeared much later, it would be very odd.&#10;                #print_debug( &quot;debug: get_is_standard_license(): found: %s&quot; % key )&#10;                return key&#10;&#10;        #print_debug( &quot;debug: get_is_standard_license(): text not identified\n %s&quot; % text )&#10;        return u&quot;&quot;&#10;&#10;    def get_are_same_standard_license(self, texta, textb, license_name_out):&#10;        standard_name_a = self.get_is_standard_license(texta)&#10;        if(len(standard_name_a) == 0): &#10;            return False&#10;&#10;        standard_name_b = self.get_is_standard_license(textb)&#10;        if(standard_name_a == standard_name_b):&#10;            license_name_out = standard_name_a&#10;            return True&#10;        else:&#10;            license_name_out = u&quot;&quot;&#10;            return False&#10;&#10;&#10;&#10;&#10;&#10;#### From James Henstridge's httpcache.py, with ugly changes by me (Murray Cumming:&#10;&#10;'''Very simple minded class that can be used to maintain a cache of files&#10;downloaded from web servers.  It is designed to reduce load on web servers,&#10;and draws ideas from feedparser.py.  Strategies include:&#10;    - If a resource has been checked in the last 6 hours, consider it current.&#10;    - support gzip transfer encoding.&#10;    - send If-Modified-Since and If-None-Match headers when validating a&#10;      resource to reduce downloads when the file has not changed.&#10;    - honour Expires headers returned by server.  If no expiry time is&#10;      given, it defaults to 6 hours.&#10;'''&#10;&#10;import os&#10;import urllib2&#10;import urlparse&#10;import time&#10;import rfc822&#10;import StringIO&#10;try:&#10;    import gzip&#10;except ImportError:&#10;    gzip = None&#10;&#10;try:&#10;    import xml.dom.minidom&#10;except ImportError:&#10;    raise SystemExit, 'Python xml packages are required but could not be found'&#10;&#10;class HttpCache:&#10;&#10;    def __init__(self):&#10;        self._cache = HttpCache.Cache()&#10;&#10;  &#10;&#10;  &#10;&#10;    class Cache:&#10;&#10;        class CacheEntry:&#10;            def __init__(self, uri, local, modified, etag, expires=0):&#10;                self.uri = uri&#10;                self.local = local&#10;                self.modified = modified&#10;                self.etag = etag&#10;                self.expires = expires&#10;&#10;        cachedir = os.path.join(os.environ['HOME'], '.jhbuild', 'cache')&#10;        # default to a 6 hour expiry time.&#10;        default_age = 6 * 60 * 60&#10;&#10;        def __init__(self, cachedir=None):&#10;            if cachedir:&#10;                self.cachedir = cachedir&#10;            if not os.path.exists(self.cachedir):&#10;                os.makedirs(self.cachedir)&#10;            self.entries = {}&#10;&#10;        def read_cache(self):&#10;            self.entries = {}&#10;            cindex = os.path.join(self.cachedir, 'index.xml')&#10;            try:&#10;                document = xml.dom.minidom.parse(cindex)&#10;            except:&#10;                return # treat like an empty cache&#10;            if document.documentElement.nodeName != 'cache':&#10;                document.unlink()&#10;                return # doesn't look like a cache&#10;&#10;            for node in document.documentElement.childNodes:&#10;                if node.nodeType != node.ELEMENT_NODE: continue&#10;                if node.nodeName != 'entry': continue&#10;                uri = node.getAttribute('uri')&#10;                local = str(node.getAttribute('local'))&#10;                if node.hasAttribute('modified'):&#10;                    modified = node.getAttribute('modified')&#10;                else:&#10;                    modified = None&#10;                if node.hasAttribute('etag'):&#10;                    etag = node.getAttribute('etag')&#10;                else:&#10;                    etag = None&#10;                expires = self._parse_isotime(node.getAttribute('expires'))&#10;                # only add to cache list if file actually exists.&#10;                if os.path.exists(os.path.join(self.cachedir, local)):&#10;                    self.entries[uri] = HttpCache.Cache.CacheEntry(uri, local, modified,&#10;                                                   etag, expires)&#10;            document.unlink()&#10;&#10;        def _parse_isotime(self, string):&#10;            if string[-1] != 'Z':&#10;                return time.mktime(time.strptime(string, '%Y-%m-%dT%H:%M:%S'))&#10;            tm = time.strptime(string, '%Y-%m-%dT%H:%M:%SZ')&#10;            return time.mktime(tm[:8] + (0,)) - time.timezone&#10;&#10;        def _format_isotime(self, tm):&#10;            return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(tm))&#10;&#10;        def write_cache(self):&#10;            cindex = os.path.join(self.cachedir, 'index.xml')&#10;&#10;&#10;            document = xml.dom.minidom.Document()&#10;            document.appendChild(document.createElement('cache'))&#10;            node = document.createTextNode('\n')&#10;            document.documentElement.appendChild(node)&#10;            for uri in self.entries.keys():&#10;                entry = self.entries[uri]&#10;                node = document.createElement('entry')&#10;                node.setAttribute('uri', entry.uri)&#10;                node.setAttribute('local', entry.local)&#10;                if entry.modified:&#10;                    node.setAttribute('modified', entry.modified)&#10;                if entry.etag:&#10;                    node.setAttribute('etag', entry.etag)&#10;                node.setAttribute('expires', self._format_isotime(entry.expires))&#10;                document.documentElement.appendChild(node)&#10;&#10;                node = document.createTextNode('\n')&#10;                document.documentElement.appendChild(node)&#10;&#10;            document.writexml(open(cindex, 'w'))&#10;            document.unlink()&#10;&#10;        def _make_filename(self, uri):&#10;            '''picks a unique name for a new entry in the cache.&#10;            Very simplistic.'''&#10;            # get the basename from the URI&#10;            parts = urlparse.urlparse(uri, allow_fragments=False)&#10;            base = parts[2].split('/')[-1]&#10;            if not base: base = 'index.html'&#10;&#10;            is_unique = False&#10;            while not is_unique:&#10;                is_unique = True&#10;                for uri in self.entries.keys():&#10;                    if self.entries[uri].local == base:&#10;                        is_unique = False&#10;                        break&#10;                if not is_unique:&#10;                    base = base + '-'&#10;            return base&#10;&#10;&#10;        def _parse_date(self, date):&#10;            tm = rfc822.parsedate_tz(date)&#10;            if tm:&#10;                return rfc822.mktime_tz(tm)&#10;            return 0&#10;&#10;&#10;        def load(self, uri, nonetwork=False):&#10;            '''Downloads the file associated with the URI, and returns a local&#10;            file name for contents.'''&#10;            # pass file URIs straight through -- no need to cache them&#10;            parts = urlparse.urlparse(uri)&#10;            if parts[0] in ('', 'file'):&#10;                return parts[2]&#10;&#10;            now = time.time()&#10;&#10;            # is the file cached and not expired?&#10;            self.read_cache()&#10;            entry = self.entries.get(uri)&#10;            if entry:&#10;                if (nonetwork or now &lt;= entry.expires):&#10;                    return os.path.join(self.cachedir, entry.local)&#10;&#10;            if nonetwork:&#10;                raise RuntimeError('file not in cache, but not allowed '&#10;                               'to check network')&#10;&#10;            request = urllib2.Request(uri)&#10;            if gzip:&#10;                request.add_header('Accept-encoding', 'gzip')&#10;            if entry:&#10;                if entry.modified:&#10;                    request.add_header('If-Modified-Since', entry.modified)&#10;                if entry.etag:&#10;                    request.add_header('If-None-Match', entry.etag)&#10;&#10;            try:&#10;                response = urllib2.urlopen(request)&#10;&#10;                # get data, and gunzip it if it is encoded&#10;                data = response.read()&#10;                ## if gzip and response.headers.get('Content-Encoding', '') == 'gzip':&#10;                ##    try:&#10;                ##        data = gzip.GzipFile(fileobj=StringIO.StringIO(data)).read()&#10;                ##    except:&#10;                ##        data = ''&#10;    &#10;                expires = response.headers.get('Expires')&#10;&#10;                # add new content to cache&#10;                entry = HttpCache.Cache.CacheEntry(uri, self._make_filename(uri),&#10;                                   response.headers.get('Last-Modified'),&#10;                                   response.headers.get('ETag'))&#10;                filename = os.path.join(self.cachedir, entry.local)&#10;                open(filename, 'wb').write(data)&#10;            except urllib2.HTTPError, e:&#10;                if e.code == 304: # not modified; update validated&#10;                    expires = e.hdrs.get('Expires')&#10;                    filename = os.path.join(self.cachedir, entry.local)&#10;                else:&#10;                    raise&#10;&#10;            # set expiry date&#10;            entry.expires = self._parse_date(expires)&#10;            if entry.expires &lt;= now: # ignore expiry times that have already passed&#10;                entry.expires = now + self.default_age&#10;    &#10;            # save cache&#10;            self.entries[uri] = entry&#10;            self.write_cache()&#10;            return filename&#10;&#10;    _cache = None&#10;    def load(self, uri, nonetwork=False):&#10;        '''Downloads the file associated with the URI, and returns a local&#10;        file name for contents.'''&#10;        if not self._cache: self._cache = Cache()&#10;        return self._cache.load(uri, nonetwork=nonetwork)&#10;&#10;&#10;&#10;&#10;&#10;&#10;&#10;#### From package_data.py:&#10;&#10;import apt # For apt.Cache.&#10;import apt_pkg # For apt_pkg.GetPkgSourceList&#10;&#10;import sys&#10;import os&#10;import dircache&#10;&#10;import urllib2 #Library to do downloads.&#10;import os.path #For split()&#10;import gzip&#10;import tarfile&#10;import StringIO&#10;&#10;#We create globals object because Python makes it so difficult to have static class methods.&#10;#(A patch would be welcome if you disagree.) murrayc.&#10;standard_licenses = StandardLicenses()&#10;the_httpcache = HttpCache();&#10;&#10;class PackageData:&#10;    def __init__(self, apt_cache, apt_srcrecords, candver):&#10;&#10;        # Save the name and version:&#10;        self.name = candver.ParentPkg.Name&#10;        self.version = candver.VerStr&#10;&#10;        # Get the description and tarball URI:&#10;        package = apt_cache[self.name]&#10;        self.description = package.description&#10;&#10;        #print_debug( &quot;  Name %s&quot; % package.Name )&#10;        self.source_package_name = package.sourcePackageName&#10;&#10;        #Get the path of the source tarball, using the apt-pkg API:&#10;        srcrec = apt_srcrecords.Lookup(self.source_package_name)&#10;        if(srcrec == None):&#10;            apt_srcrecords.Restart() #Michael Vogt said this might stop Lookup() from failing sometimes.&#10;            srcrec = apt_srcrecords.Lookup(self.source_package_name) #Try again&#10;&#10;        if srcrec:&#10;            # TODO: Is this really the only way to get the path?&#10;            # It's ugly.&#10;            #&#10;            for (the_md5hash, the_size, the_path, the_type) in apt_srcrecords.Files:&#10;                if(the_type == &quot;tar&quot;): #Possible types seems to be &quot;tar&quot;, &quot;dsc&quot;, and &quot;diff&quot;&#10;                    self.tarball_uri = the_path&#10;                    # TODO: In Ubuntu Edgy, we should be able to get the full URI by doing this,&#10;                    # according to Michael Vogt:&#10;                    # self.tarball_uri = srcrec.Index.ArchiveURI(self.tarball_uri)&#10;                elif(the_type == &quot;diff&quot;):&#10;                    self.diff_uri = the_path&#10;        else:&#10;            print_debug( &quot;  debug: apt_srcrecords.Lookup() failed for package %s. &quot; % self.source_package_name )&#10;&#10;&#10;        # Note: This is broken when Dir::State::status is not set: It returns huge false, irrelevant dependencies.&#10;        # Get the dependencies of this package:&#10;        # TODO: Get direct dependencies only?&#10;        dependslist = candver.DependsList&#10;&#10;        #Look at each dependency:&#10;        self.dependencies = set() #If we don't do this then it seems to use the list from the last instantiation of this class, so the list keeps getting bigger.&#10;        for dep in dependslist.keys():&#10;&#10;            # get the list of each dependency object&#10;            for depVerList in dependslist[dep]:&#10;&#10;                for z in depVerList:&#10;&#10;                    # get all TargetVersions of&#10;                    # the dependency object&#10;                    for tpkg in z.AllTargets():&#10;                        self.dependencies.add(tpkg.ParentPkg.Name)&#10;                        #TODO: This does not always seem to be the same name that we get for the parent package.&#10;                        #       Sometimes there is no package with this exact name.&#10;                        #       Or maybe that's a problem with the repository.&#10;&#10;        #print_debug( &quot;  debug: dependencies of package %s: %s&quot; % (self.name, self.dependencies) )&#10;&#10;&#10;        self.license_text = &quot;&quot;&#10;        license_found = False&#10;        #repository_base_uri = &quot;http://archive.ubuntu.com/ubuntu/&quot; # TODO: Get this from python-apt somehow.&#10;        repository_base_uri = &quot;http://repository.maemo.org/&quot; # Remove this hack when we have ArchiveURI() in python-apt in Ubuntu Edgy.&#10;&#10;        if(self.diff_uri):&#10;            full_diff_uri = repository_base_uri + self.diff_uri&#10;            self.diff_uri = full_diff_uri #Store the full URI so we can use it in scripts in the Glom database if we like.&#10;&#10;        #Try to get the license text by looking at the source tarball:&#10;        if(self.tarball_uri):&#10;&#10;             # Michael Vogt says that full_uri = srcrec.Index.ArchiveURI(tarball_uri) gives the whole thing, but that will only work in Ubuntu Edgy (not Dapper)&#10;&#10;            full_uri = repository_base_uri + self.tarball_uri&#10;            self.tarball_uri = full_uri #Store the full URI so we can use it in scripts in the Glom database if we like.&#10;&#10;            license_found = self.get_license_from_tarball(full_uri)&#10;            if(license_found == False):&#10;                print_debug( &quot;debug: package: %s, license file not found in tarball: %s&quot; % (self.name, full_uri) )&#10;&#10;        #Try to get the license from the .diff instead:&#10;        if(license_found == False and self.diff_uri):&#10;&#10;            #print_debug( &quot;  debug: Trying the .diff instead: URI=%s&quot; % self.diff_uri )&#10;            license_found = self.get_license_from_diffgz(self.diff_uri)&#10;            if(license_found == False):&#10;                print_debug( &quot;    debug: package: %s, license file not found in diff: %s&quot; % (self.name, self.diff_uri) )&#10;&#10;        self.license_found = license_found&#10;&#10;&#10;    def get_license_from_file(self, file_object):&#10;        license_found = False&#10;&#10;        data = file_object.read()&#10;        if((data == None) or (len(data) == 0)):&#10;            text = u&quot;unknown (empty)&quot;&#10;        else:&#10;            text = self.convert_to_unicode_with_fallbacks(data)&#10;            if(len(text) == 0):&#10;                text = u&quot;unknown (encoding error)&quot;&#10;            else:&#10;                license_found = True;&#10;         &#10;        self.license_text = text&#10;&#10;        #Remove any unnecessary leading or trailing whitespace:&#10;        self.license_text = self.license_text.strip();&#10;&#10;        print_debug( &quot;  debug: is standard license?: %s&quot; % standard_licenses.get_is_standard_license(self.license_text) )&#10;&#10;        return license_found&#10;&#10;&#10;    def convert_to_unicode_with_fallbacks(self, data, encoding=None):       &#10;        try:&#10;            if(encoding == None):&#10;                result = unicode(data)&#10;            else:&#10;                result = unicode(data, encoding)&#10;&#10;            return result&#10;        except UnicodeError, ex:&#10;            result = &quot;&quot;&#10;            print_debug( &quot;  debug: encoding error: encoding=%s&quot; % str(encoding) )&#10;&#10;        #Decoding failed if we got this far:&#10;&#10;        #Fall back to other encodings:&#10;        if(encoding == None):&#10;           possible_encodings = (&quot;utf-8&quot;, &quot;ascii&quot;, &quot;latin_1&quot;, &quot;utf_16&quot;, &quot;iso8859_2&quot;)&#10;           for enc in possible_encodings:&#10;               result = self.convert_to_unicode_with_fallbacks(data, enc);&#10;               if(len(result) != 0):&#10;                   print_debug( &quot;fallback encoding successful: %s&quot; % enc )&#10;                   return result;&#10;&#10;           print_debug( &quot;debug: encoding error: All fallback codecs failed.&quot; )&#10;&#10;        return u&quot;&quot;;&#10;&#10;    def get_license_from_tarball_tarfile(self, the_tarfile):&#10;        license_found = False&#10;&#10;        try:&#10;            for tarinfo in the_tarfile:&#10;                if(tarinfo.isreg()):&#10;                    filepath = tarinfo.name&#10;                    (directory, filename) = os.path.split(filepath)&#10;&#10;                    # Find a license file and read its contents:&#10;&#10;                    previously_found_pathdir = &quot;&quot;&#10;                    if(filename in self.possible_license_files): #TODO: Make this case-insensitive somehow?&#10;                        print_debug( &quot;debug: package: %s, license file found in tarball. Attempting read: %s&quot; % (self.name, filename) )&#10;&#10;                        fileobject = the_tarfile.extractfile(tarinfo)&#10;&#10;                        previous_found_license = self.license_text&#10;                        is_higher_than_previous = ( len(previously_found_pathdir) == 0 or (len(directory) &lt; len(previously_found_pathdir)) )&#10;&#10;                        license_found_this = self.get_license_from_file(fileobject)&#10;                        if(license_found_this):&#10;                            license_found = True&#10;                            #print_debug( &quot;  debug: read successful.&quot; )&#10;&#10;                            if(is_higher_than_previous):&#10;                                previously_found_pathdir = directory&#10;                            else:&#10;                                # Restore the one we found earlier&#10;                                # (it was at a higher directory level, so it's more likely to be what we want.&#10;                                self.license_text = previous_found_license;&#10;                                #print_debug( &quot;  debug1: restoring previous found text&quot; )&#10;                        else:&#10;                            print_debug( &quot;  debug: read failed. Error, if any: %s&quot; %  self.license_text  )&#10;                            #Restore the last text if any, including the last &quot;unknown&quot; error text,&#10;                            #so we prefer previous found license text, or errors from higher-up files:&#10;                            if( license_found or ((is_higher_than_previous == False) and len(previous_found_license)) ):&#10;                                 self.license_text = previous_found_license;&#10;                                 #print_debug( &quot;  debug2: restoring previous found text&quot; )&#10;&#10;                            &#10;&#10;        except tarfile.TarError, ex:&#10;            print_debug( &quot;Error while extracting tarball: %s&quot; % str(ex) )&#10;&#10;        #print_debug( &quot;debug: File found in tarball?: %s&quot; % str(license_found) )&#10;&#10;        #If no license was found, try looking for nested tarballs.&#10;        #This seems to happen quite often - the tarball contains a tarball.&#10;        if(license_found == False):&#10;            try:&#10;                for tarinfo in the_tarfile:&#10;                    if(tarinfo.isreg()):&#10;                        filepath = tarinfo.name&#10;                        (directory, filename) = os.path.split(filepath)&#10;&#10;                        # Find a .tar.gz file inside the tarball:&#10;                        file_extensions = (&quot;.tar.gz&quot;, &quot;.tgz&quot;, &quot;.bz2&quot;)&#10;&#10;                        for ext in file_extensions:&#10;                            if(filepath.endswith(ext)):&#10;                                #print_debug( &quot;debug: package: %s, examining nested tarball: %s&quot; % (self.name, filename) )&#10;&#10;                                file_object = the_tarfile.extractfile(tarinfo)&#10;&#10;                                try:&#10;                                    #This doesn't work - we get this error:&#10;                                    # &quot; 'ExFileObject' object has no attribute 'rfind' &quot;&#10;                                    #&#10;                                    #tar = tarfile.open(file_object)&#10;&#10;                                    #So we do this instead:&#10;                                    gzipped_data = file_object.read() #Or bzipped.&#10;                                    filename_local = &quot;/tmp/repository_analyzer_nested_temp.tar&quot; + ext&#10;                                    localfile = open(filename_local, 'wb')&#10;                                    localfile.write(gzipped_data)&#10;                                    localfile.close()&#10;&#10;                                except TarError, ex:&#10;                                    #raise&#10;                                    print_debug( &quot;tarfile.open() of nested tarball failed: for package: %s, for file: %s: %s&quot; % (self.name, filename, ex) )&#10;                                    self.license_text = &quot;unknown (error extracting nested tarball)&quot;&#10;                                    license_found = False&#10;&#10;                                try:&#10;                                    license_found = self.get_license_from_tarball(filename_local)&#10;                                except  TarError, ex:&#10;                                    #raise&#10;                                    print_debug( &quot;tarfile.open() of nested tarball failed: for package: %s, for file: %s: %s&quot; % (self.name, filename, ex) )&#10;                                    self.license_text = &quot;unknown (error opening extracted nested tarball)&quot;&#10;                                    license_found = False&#10;&#10;            except TarError, ex:&#10;                 print_debug( &quot;Error while extracting tarball: %s&quot; % str(ex) )&#10;&#10;        return license_found;&#10;&#10;    # This seems to be the only way to delete a directory without getting exceptions about it not being empty:&#10;    # I took this from some forum somewhere.&#10;    # I am surprised that there isn't an easier way. murrayc.&#10;    def recursive_delete(self, dirname):&#10;        #print_debug( &quot;debug: recursive_delete(%s)&quot; % dirname )&#10;        dircache.reset() #Seems to be necessary. Otherwise it sometimes reports incorrect filenames.&#10;        files = dircache.listdir(dirname)&#10;        for thefile in files:&#10;            #print_debug( &quot;  debug: thefile=%s&quot; % thefile )&#10;            path = os.path.join (dirname, thefile)&#10;            if os.path.isdir(path):&#10;                self.recursive_delete(path)&#10;            else:&#10;                #print_debug( 'Removing file: &quot;%s&quot;' % path )&#10;                try:&#10;                    retval = os.unlink(path)&#10;                except OSError, ex:&#10;                    print_debug( &quot;  debug: exception in recursive_delete(self, %s), while unlink path %s&quot; % (dirname, path) )&#10;                    raise&#10;&#10;        #print_debug( 'Removing directory:', dirname )&#10;        os.rmdir(dirname)&#10;&#10;    def get_license_from_diffgz_gzipfile(self, the_gzipfile):&#10;        license_found = False&#10;&#10;        # A .gz file can contain only one file (A .tar.gz can contain multiple files.)&#10;        try:&#10;            data = the_gzipfile.read()&#10;            filename = &quot;temp.diff&quot;&#10;            filename_local_parent = &quot;/tmp/repository_diff/&quot;&#10;&#10;            #Remove any previous temporary files there, and recreate the directory:&#10;            try:&#10;                if(os.path.isdir(filename_local_parent)):&#10;                    self.recursive_delete(filename_local_parent)&#10;            except IOError, e:&#10;                print_debug( &quot;Error during removedirs: %s&quot; % str(e) )&#10;&#10;            safe_mkdir(filename_local_parent)&#10;&#10;            filename_local = filename_local_parent + filename;&#10;            localfile = open(filename_local, 'wb')&#10;            localfile.write(data)&#10;            localfile.close()&#10;&#10;            #Expand the directory:&#10;            # -f makes it ignore warnings, so we only see new files.&#10;            # -s makes it silent (apart from errors).&#10;            # &amp;&gt; /dev/null hides errors from stdout, because strange encodings can confuse the terminal, making it show nonsense.&#10;            command = &quot;cd &quot; + filename_local_parent +&quot;; patch -p0 -f -s &lt; &quot; + filename_local + &quot; &amp;&gt; /dev/null&quot; &#10;            #print_debug( &quot;debug: command=%s&quot; % command )&#10;            os.system(command)&#10;&#10;&#10;            #Examine the files that were created by patch:&#10;            for root, dirs, files in os.walk(filename_local_parent):&#10;                for the_file in files:&#10;                    if(the_file in self.possible_license_files):&#10;                        the_file_fullpath = os.path.join(root, the_file)&#10;                        print_debug( &quot;debug: license file found in diff: %s&quot; % the_file_fullpath )&#10;&#10;                        try:&#10;                            fileobject = open(the_file_fullpath)&#10;                            if(fileobject):&#10;                                license_found = self.get_license_from_file(fileobject)&#10;                        except IOError, e:&#10;                            print_debug( &quot;Could not open file: %s&quot; % the_file_fullpath )&#10;                            print_debug( &quot;  Exception: %s&quot; % str(e) )&#10;&#10;        except IOError, e:&#10;            print_debug( &quot;Could not read gzipfile %s&quot; % str(e) )&#10;&#10;        return license_found;&#10;&#10;&#10;&#10;    def open_tarball(self, uri):&#10;        if (uri == &quot;&quot;):&#10;            self.license_text = &quot;unknown (empty source tarball file URI)&quot;&#10;            return&#10;&#10;        #print_debug( &quot;debug: open_tarball(): uri=%s&quot; % uri )&#10;&#10;        # Get the tar.gz tarball data:&#10;        # Use the httpcache to avoid repeated downloads of the same tarball:&#10;        try:&#10;            local_filename = the_httpcache.load(uri)&#10;        except IOError, e:&#10;            print_debug( &quot;Could not download %s: %s&quot; % (uri, str(e)) )&#10;            self.license_text = &quot;unknown (error downloading source tarball file)&quot;&#10;            return&#10;&#10;        #print_debug( &quot;debug: local_filename=%s&quot; % local_filename )&#10;&#10;        #Non-httpcache version:&#10;        ## request = urllib2.Request(uri)&#10;        ## request.add_header('Accept-encoding', 'gzip')&#10;        ##&#10;        ## try:&#10;        ##     response = urllib2.urlopen(request)&#10;&#10;        ##     # get data, and gunzip it if it is encoded&#10;        ##     gzipped_data = response.read()&#10;        ##     ##print_debug( &quot;data read&quot; )&#10;        ##     ##print_debug( &quot;response.headers=%s&quot; % response.headers )&#10;        ##     ##if 1: #response.headers.get('Content-Encoding', '') == 'gzip':&#10;        ##     ##   try:&#10;        ##     ##       data = gzip.GzipFile(fileobj=StringIO.StringIO(gzipped_data)).read()&#10;        ##     ##    except:&#10;        ##     ##       print_debug( &quot;GzipFile failed.&quot; )&#10;        ##     ##        data = ''&#10;        ##&#10;        ## except urllib2.HTTPError, e:&#10;        ##      print_debug( &quot;error: Could not open url: %s&quot; % uri )&#10;        ##         raise&#10;&#10;        # Save the gzipped data to a local file:&#10;        # TODO: Maybe tarfile.open() can open the URI directly, or can directly access the data?&#10;        # The documentation hints at this, but I can't get it to work. murrayc.&#10;        #filename_local = &quot;/tmp/repository_analyzer_temp.tar.gz&quot;&#10;        #open(filename_local, 'wb').write(gzipped_data)&#10;&#10;        # Open the local file as a tarfile,&#10;        # so we can examine its contents:&#10;&#10;        # Try opening the file as a .gz or .bz2:&#10;        # Actually, they always seem to be .tar.gz files.&#10;        could_open_file = False&#10;        for open_mode in (&quot;r:gz&quot;, &quot;r:bz2&quot;):&#10;            #print_debug( &quot;trying mode=%s for local_filename=%s&quot; % (open_mode, local_filename) )&#10;            try:&#10;                tar = tarfile.open(local_filename, open_mode)&#10;&#10;                if(tar):&#10;                    return tar;&#10;            except Exception, ex:&#10;                print_debug( &quot;debug: tarfile open failed with mode=%s for filename=%s&quot; % (open_mode, local_filename) )&#10;                print_debug( &quot;  ex=%s&quot; % ex )&#10;                continue&#10;&#10;        print_debug( &quot;package=%s Could not open source URI as .gz or .bz2: %s&quot; % (self.name, local_filename) )&#10;        return&#10;&#10;    def open_gzipfile(self, uri):&#10;        if (uri == &quot;&quot;):&#10;            return&#10;&#10;        # Get the tar.gz tarball data:&#10;        # Use the httpcache to avoid repeated downloads of the same tarball:&#10;        try:&#10;            local_filename = the_httpcache.load(uri)&#10;        except Exception, e:&#10;            print_debug( &quot;Could not download %s: %s&quot; % (uri, str(e)) )&#10;            self.license_text = &quot;unknown (error downloading tarball)&quot;&#10;            return&#10;&#10;        # Open the local file as a gzipfile,&#10;        # so we can examine its contents:&#10;&#10;        # Try opening the file as a .gz or .bz2:&#10;        # Actually, they always seem to be .tar.gz files.&#10;        try:&#10;            gzipped_file = gzip.open(local_filename)&#10;            if(gzipped_file):&#10;                return gzipped_file&#10;        except Exception, ex:&#10;            print_debug( &quot;debug: gzipfile open failed for filename=%s&quot; % local_filename )&#10;            print_debug( &quot;  ex=%s&quot; % ex )&#10;&#10;        print_debug( &quot;package=%s Could not open diff.gz URI as .gz: %s&quot; % (self.name, local_filename) )&#10;        return&#10;&#10;&#10;&#10;&#10;    def get_license_from_tarball(self, uri):&#10;        # print_debug( &quot;debug: Trying tarball: %s&quot; % uri )&#10;        # Based on code in jhbuild's httpcache.py:&#10;&#10;        self.license_text = &quot;unknown&quot; #The default&#10;&#10;        tar = self.open_tarball(uri)&#10;        if(tar == None):&#10;            if(len(self.license_text) == 0):&#10;                self.license_text = u&quot;unknown (error opening source tarball file)&quot;&#10;            return False&#10;&#10;        license_found = self.get_license_from_tarball_tarfile(tar)&#10;        tar.close()&#10;&#10;        return license_found&#10;&#10;&#10;    def get_license_from_diffgz(self, uri):&#10;        # Based on code in jhbuild's httpcache.py:&#10;&#10;        self.license_text = u&quot;unknown&quot; #The default&#10;&#10;        gzipped_file = self.open_gzipfile(uri)&#10;        if(gzipped_file == None):&#10;            self.license_text = u&quot;unknown (error opening diff.gz file)&quot;&#10;            print_debug( &quot;debug: open_tarball(%s) failed.&quot; % uri )&#10;            return False&#10;&#10;        license_found = self.get_license_from_diffgz_gzipfile(gzipped_file)&#10;        gzipped_file.close()&#10;&#10;        if(license_found == False):&#10;            if(len(self.license_text) == 0): #TODO: Is there an empty() for efficiency?&#10;                self.license_text = u&quot;unknown (error reading from source tarball file)&quot;&#10;&#10;        return license_found&#10;&#10;&#10;&#10;    name = &quot;&quot;&#10;    source_package_name = &quot;&quot;&#10;    tarball_uri = &quot;&quot;&#10;    diff_uri = &quot;&quot;&#10;    version = &quot;&quot;&#10;    dependencies = set()&#10;    license_found = False;&#10;    license_text = &quot;&quot;&#10;    license_text_simplified = False; # Whether we extracted a common part of the license, ignoring a unique part.&#10;&#10;    # TODO: Be more clever when more than one of these files is present, or at least prioritize them:&#10;    # In some cases there are multiple licenses because different executables in the tarball are&#10;    # under different licenses. For instance, flac. In that case, a human must decide.&#10;    possible_license_files = (&quot;COPYING&quot;, &quot;COPYING.LIB&quot;, &quot;LICENSE&quot;, &quot;LICENCE&quot;, &quot;license&quot;, &quot;licence&quot;, &quot;COPYING.Xiph&quot;, &quot;LEGAL.NOTICE&quot;, &quot;COPYRIGHT&quot;, &quot;COPYRIGHT.TXT&quot;, &quot;license.terms&quot;, &quot;licence.terms&quot;, &quot;Copying&quot;, &quot;copying&quot;, &quot;copying.lib&quot;, &quot;copyright&quot;, &quot;LICENSE_1_0.txt&quot;, &quot;copyright.in&quot;)&#10;&#10;&#10;&#10;#### From safe_mkdir.py:&#10;&#10;# I took this from some forum somewhere.&#10;# I am surprised that there isn't an easier way. murrayc.&#10;&#10;def safe_mkdir(newdir):&#10;    &quot;&quot;&quot;works the way a good mkdir should :)&#10;        - already exists, silently complete&#10;        - regular file in the way, raise an exception&#10;        - parent directory(ies) does not exist, make them as well&#10;    &quot;&quot;&quot;&#10;    if os.path.isdir(newdir):&#10;        pass&#10;    elif os.path.isfile(newdir):&#10;        raise OSError(&quot;a file with the same name as the desired &quot; \&#10;                      &quot;dir, '%s', already exists.&quot; % newdir)&#10;    else:&#10;        head, tail = os.path.split(newdir)&#10;        if head and not os.path.isdir(head):&#10;            safe_mkdir(head)&#10;        #print_debug( &quot;_mkdir %s&quot; % repr(newdir) )&#10;        if tail:&#10;            os.mkdir(newdir)&#10;&#10;&#10;&#10;#### From py:&#10;&#10;def escape_text_for_sql(text):&#10;    # Note that this probably requires Glom 1.0.5, because previous versions can't handle newlines in text fields for example_rows.&#10;    # Use this as a workaround when using Glom &lt; 1.0.5:&#10;    # placeholder_newline = &quot;NEWLINE&quot;&#10;&#10;    text = text.replace(&quot;\n&quot;, &quot;\\n&quot;);&#10;&#10;    #Workaround for the postgres errors about unterminated quoted strings:&#10;    #text = text.replace(&quot;\'&quot;, &quot;XsinglequoteX&quot;)&#10;    #text = text.replace(&quot;`&quot;, &quot;XbackquoteX&quot;)&#10;    #text = text.replace(&quot;\&quot;&quot;, &quot;XdoublequoteX&quot;)&#10;    #text = text.replace(&quot;,&quot;, &quot;XcommaX&quot;)&#10;&#10;    #Escape other characters that must be escaped for postgres:&#10;    #Single quotes must be quoted as '', but backquotes and double quotes must not.&#10;    #Not that this text will be further quoted (for XML) when it is written as XML.&#10;    text = text.replace(u&quot;\'&quot;, u&quot;\'\'&quot;)&#10;    text = text.replace(u&quot;;&quot;,u&quot;\\073&quot;)&#10;    return text&#10;&#10;def boolean_for_sql(val):&#10;    if(val == True):&#10;        return &quot;TRUE&quot;&#10;    else:&#10;        return &quot;FALSE&quot;&#10;&#10;def quote_for_sql(text):&#10;    return &quot;'&quot; + text + &quot;'&quot;&#10;&#10;&#10;&#10;def get_licenses_map(packages_dict):&#10;    #Build a map of licenses, so we can list each unique license only once:&#10;    licenses_map = {}&#10;&#10;    for package_name in packages_dict.keys():&#10;        package_data = packages_dict[package_name]&#10;        if(package_data.license_text and len(package_data.license_text)): #TODO: Is there an empty() method to save time?&#10;            # Create a list for this key, if necessary:&#10;            if(licenses_map.has_key(package_data.license_text) == False):&#10;                licenses_map[package_data.license_text] = [] # An empty list.&#10;&#10;            # Associate the package name with this license text,&#10;            # along with any other package names already associated with the same license text:&#10;            licenses_map[package_data.license_text].append(package_data.name)&#10;&#10;    return licenses_map&#10;&#10;def get_licenses_map_with_matching(out_licenses_map, packages_dict):&#10;    #For quick debugging of the previous steps:&#10;    #return False;&#10;&#10;    #Examine each license and try to extract common parts,&#10;    #ignoring small differences such as &quot;XYZ is license under the GPL. Here is the license.&quot;&#10;&#10;    match_found = False;&#10;    dict_matching_packages = {}&#10;    for license_text in out_licenses_map.keys():&#10;&#10;        do_exact_match = False #Otherwise, do an approximate match.&#10;&#10;        #Don't roughly compare the special &quot;unknown&quot; error license texts.&#10;        #Compare these exactly instead.&#10;        package_name_list = out_licenses_map[license_text]&#10;        package_name_first = package_name_list[0]&#10;        if(packages_dict[package_name_first].license_found == False):&#10;            do_exact_match = True&#10;&#10;        for other_license_text in out_licenses_map.keys():&#10;&#10;            debugwindow.refresh_ui() #Make sure it still reacts.&#10;&#10;            #Don't compare to itself:&#10;            if(other_license_text == license_text):&#10;                break&#10;&#10;            other_do_exact_match = do_exact_match #Otherwise, do an approximate match.&#10;&#10;            #Don't roughly compare the special &quot;unknown&quot; error license texts.&#10;            #Compare these exactly instead.&#10;            if(other_do_exact_match == False):&#10;                package_name_list = out_licenses_map[other_license_text]&#10;                package_name_first = package_name_list[0]&#10;                if(packages_dict[package_name_first].license_found == False):&#10;                    other_do_exact_match = True&#10;&#10;            this_match_found = False&#10;            common_text = &quot;&quot;&#10;            license_name = &quot;&quot;&#10;&#10;            if(other_do_exact_match):&#10;                #Exact comparison:&#10;                if(license_text == other_license_text):&#10;                    this_match_found = True&#10;                    common_text = license_text&#10;            else:&#10;&#10;                #Standard-licenses comparison:&#10;                license_name = &quot;&quot;&#10;                if(standard_licenses.get_are_same_standard_license(license_text, other_license_text, license_name)):&#10;                    this_match_found = True&#10;                    common_text = license_text #TODO: Use the standard text somehow?.&#10;                    #print_debug( &quot;  debug: standard license texts found.&quot; )&#10;                else:&#10;                    #Rough comparison:&#10;                    matcher = difflib.SequenceMatcher(None, license_text, other_license_text)&#10;                    if(matcher.ratio() &gt;= 0.95): #quick_ratio() is significantly faster than ratio().&#10;                        this_match_found = True&#10;                        common_text = &quot;&quot;&#10;                        for block in matcher.get_matching_blocks():&#10;                            (start_a, start_b, count) = block&#10;                            common_text += license_text[start_a:(start_a + count)]&#10;&#10;            if(this_match_found):&#10;                match_found = True;&#10;                print_debug( &quot;match found for packages %s and packages %s&quot; % (out_licenses_map[license_text], out_licenses_map[other_license_text]) )&#10;                #print_debug( &quot;match found: text=%s&quot; % (common_text) )&#10;&#10;                for package_name in out_licenses_map[license_text]:&#10;                    dict_matching_packages[package_name] = common_text&#10;&#10;                for package_name in out_licenses_map[other_license_text]:&#10;                    dict_matching_packages[package_name] = common_text&#10;&#10;&#10;    #Use the matches that were found:&#10;    for package_name in dict_matching_packages.keys():&#10;        license_text_common = dict_matching_packages[package_name]&#10;&#10;        #Store the simplified license text instaed of the original:&#10;        packages_dict[package_name].license_text = license_text_common&#10;        packages_dict[package_name].license_text_simplified = True; #Mark that we did this.&#10;&#10;    #Change the contents of the output variable:&#10;    new_licenses_map = get_licenses_map(packages_dict)&#10;    out_licenses_map.clear()&#10;    out_licenses_map.update(new_licenses_map)&#10;&#10;    return match_found&#10;&#10;&#10;def get_package_data_list(out_licenses_map):&#10;&#10;    #Start with the default config, probably from /etc/apt/sources.list:&#10;    apt_pkg.InitConfig()&#10;    apt_pkg.InitSystem()&#10;&#10;    #Use a temporary config:&#10;    config_dir_cache_archives = &quot;./tmp_apt_archives&quot;&#10;    config_dir_state = &quot;./tmp_apt_varlibapt&quot;  #usually /var/lib/apt&#10;    config_dir_state_lists =  config_dir_state + &quot;/lists&quot;&#10;    config_dir_state_status = &quot;./tmp_apt_varlibdpkg&quot; #usually /var/lib/dpkg/&#10;    config_file_state_status = &quot;./tmp_apt_varlibdpkg/status&quot; #usually /var/lib/dpkg/status&#10;&#10;    # Create the temporary directories, because python-apt does not seem to&#10;    # create them automatically, and throws exceptions.&#10;    safe_mkdir(config_dir_cache_archives)&#10;    safe_mkdir(config_dir_cache_archives + &quot;/partial&quot;)&#10;    safe_mkdir(config_dir_state)&#10;    safe_mkdir(config_dir_state_lists)&#10;    safe_mkdir(config_dir_state_lists + &quot;/partial&quot;)&#10;    safe_mkdir(config_dir_state_status)&#10;    tempfile = open(config_file_state_status, 'w') #Touch the file so that it exists, so that libapt does not complain.&#10;    tempfile.close()&#10;&#10;    #Write a temporary sources.list file, for python-apt to use:&#10;    #TODO: Get this from a separate python script, when glom supports libraries of reusable python scripts.&#10;    #Or maybe put it in a database table.&#10;    temp_sourceslist_path = &quot;/tmp/repository_analyzer_sources.list&quot;&#10;    output = open(temp_sourceslist_path, 'w')&#10;    sources_list = &quot;deb http://repository.maemo.org/ mistral free non-free\ndeb-src http://repository.maemo.org/ mistral free non-free&quot;&#10;&#10;    output.write(sources_list)&#10;    output.close()&#10;&#10;    # Tell apt what sources.list to use.&#10;    # (See &quot;apt-config dump&quot; for the list of all config keys.)&#10;    apt_pkg.Config.Set(&quot;Dir::Etc::sourcelist&quot;, temp_sourceslist_path)&#10;    apt_pkg.Config.Set(&quot;Dir::Cache::archives&quot;, config_dir_cache_archives)&#10;    apt_pkg.Config.Set(&quot;Dir::State&quot;, config_dir_state)&#10;    apt_pkg.Config.Set(&quot;Dir::State::Lists&quot;, config_dir_state_lists)&#10;    apt_pkg.Config.Set(&quot;Dir::State::status&quot;, config_file_state_status) #If we don't set this then we will pick up packages from the local system, from the default status file.&#10;&#10;&#10;    #Initialize the return value and the output parameter:&#10;    packages_dict = {} # A dict.&#10;    out_licenses_map.clear() #A dict of license text (big) to a list of package names. Note that = {} would assign a new dict, so the caller wouldn't get the contents.&#10;&#10;    # Get the list of all packages in the repository.&#10;    # This depends on your /etc/apt/sources.list&#10;    cache = apt.Cache()&#10;&#10;    print_debug( &quot;Updating apt cache ...&quot; )&#10;    cache.update() #We could pass a progress object to show feedback.&#10;    cache.open(apt.progress.OpProgress()) #Shouldn't python-apt's cache.update() do this? Michael Vogt thinks so.&#10;    print_debug( &quot;.. finished updating apt cache\n&quot; )&#10;&#10;    srcrecords = apt_pkg.GetPkgSrcRecords()&#10;    srcrecords.Restart()&#10;&#10;    print_debug( &quot;Number of packages in cache: %d&quot; % len(cache) )&#10;&#10;    # Look at each package:&#10;    i = 0&#10;    for pkg in cache:&#10;&#10;        candver = cache._depcache.GetCandidateVer(pkg._pkg)&#10;&#10;        # Ignore packages with no candidate version:&#10;        if candver == None:&#10;            continue&#10;&#10;        package_data = PackageData(cache, srcrecords, candver) # Retrieves the data from apt.&#10;        if(package_data.tarball_uri):&#10;            packages_dict[package_data.name] = package_data&#10;            print_debug( &quot;Processed package %d: %s&quot; % (i, package_data.name) )&#10;        #else:&#10;            # TODO: The if(package_data.tarball_uri) is an old workaround, which it doesn't hurt to keep.&#10;            # python-apt seems to list files not in the specified sources.list, if Dir::State::status is not set.&#10;            # and we detect these because there is no source url for them.&#10;            #print_debug( &quot;Abandoned package %d: %s&quot; % (i, package_data.name) )&#10;&#10;        i += 1&#10;&#10;    print_debug( &quot;Number of packages used: %d&quot; % len(packages_dict) )&#10;&#10;    #for package_data in packages_dict:&#10;    #   print_debug( package_data.name )&#10;&#10;    out_licenses_map_temp = get_licenses_map(packages_dict);&#10;&#10;    previous_licenses_count = len(out_licenses_map_temp.keys())&#10;    initial_previous_licenses_count = previous_licenses_count&#10;    print_debug( &quot;Number of unique license texts found: %d&quot; % previous_licenses_count )&#10;    print_debug( &quot;Searching for similar license texts (this can take a long time) ...&quot; )&#10;&#10;    #Note that this changes packages_dict and out_licenses_map_temp:&#10;    matches_found = True;&#10;    while(matches_found):&#10;        matches_found = get_licenses_map_with_matching(out_licenses_map_temp, packages_dict)&#10;        if(matches_found == True):&#10;            licenses_count = len(out_licenses_map_temp.keys())&#10;            print_debug( &quot;... Matching again after reducing %d unique licenses to %d ... &quot; % (previous_licenses_count, licenses_count) )&#10;            previous_licenses_count = licenses_count&#10;&#10;    print_debug( &quot;... Finished search for similar license texts: Reduced initial %d licenses to %d.&quot; % (initial_previous_licenses_count, previous_licenses_count) )&#10;&#10;    #Fill the output parameter:&#10;    out_licenses_map.clear()&#10;    out_licenses_map.update(out_licenses_map_temp)&#10;&#10;    return packages_dict&#10;&#10;&#10;def debug_create_connection_record():&#10;    #For debugging, outside of Glom:&#10;    client = gda.Client()&#10;&#10;    data_source_name = &quot;datasource_glomtest&quot;&#10;&#10;    data_source = gda.config_find_data_source(data_source_name)&#10;    if not data_source:&#10;        print_debug( &quot;debug: Creating the DataSource, because it does not exist yet.&quot; )&#10;&#10;        # Create it if it does not exist already:&#10;        data_source = gda.DataSourceInfo()&#10;        data_source.name = data_source_name&#10;        data_source.username = &quot;murrayc&quot;&#10;        data_source.password = &quot;luftballons&quot;;     &#10;        data_source.description = &quot;Test.&quot;&#10;        data_source.provider = &quot;PostgreSQL&quot;&#10;        # You must specify a database when using PostgreSQL, even when you want to create a database.&#10;        # template1 always exists.&#10;        # data_source.cnc_string = &quot;DATABASE=template1&quot;;&#10;        data_source.cnc_string = &quot;DATABASE=glom_repositoryanalyzer28162;HOST=localhost&quot;&#10;      &#10;        # TODO: Add save_data_source(data_source_info);&#10;        gda.config_save_data_source(data_source.name, data_source.provider, data_source.cnc_string, data_source.description, data_source.username, data_source.password)&#10;&#10;    gda_connection = client.open_connection(data_source.name, data_source.username, data_source.password)&#10;    &#10;    class TestRecord:&#10;        connection = None&#10;&#10;    record = TestRecord()&#10;    record.connection = gda_connection&#10;    return record;&#10;&#10;&#10;def execute_sql_query(query_text):&#10;    #We use encode() here because, when running inside Glom, gda.Command() somehow expects an ascii string and tries to convert the unicode string to ascii, causing exceptions because the conversion does not default to 'replace'.&#10;    #TODO: Find out why it acts differently inside Glom. This is not a problem when running normally as a standalone script.&#10;    command = gda.Command(query_text.encode('ascii', 'replace')) &#10;    return record.connection.execute_single_command(command)&#10;&#10;def is_first_scan():&#10;    query = &quot;SELECT license_id FROM licenses&quot;&#10;    datamodel = execute_sql_query(query)&#10;    if(datamodel and (datamodel.get_n_rows() &gt; 0)):&#10;        return False&#10;    else:&#10;        return True&#10;&#10;def main():&#10;&#10;    if(is_first_scan() == False):&#10;        dlg = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u&quot;Scan Already Done&quot;)&#10;        dlg.format_secondary_text(&quot;License records already exist, suggesting that a previous scan has already been done.&quot;)&#10;        dlg.run()&#10;        dlg.destroy()&#10;        return&#10;&#10;    #For debugging, outside of Glom:&#10;    #record = debug_create_connection_record()&#10;&#10;&#10;&#10;    # Rows of SQL-formatted, comma-separated (fields), newline-separated (rows) example data,&#10;    # as Glom expects to find in .glom files:&#10;    #rows_packages = &quot;&quot;&#10;    #rows_package_dependencies = &quot;&quot;&#10;    #rows_licenses = &quot;&quot;&#10;&#10;    licenses_map = {} # a new dict.&#10;    packages_dict = get_package_data_list(licenses_map)&#10;&#10;&#10;    empty_text = quote_for_sql(&quot;&quot;)&#10;&#10;    #Look at each key (the license texts):&#10;    licenses_map_ids = {} # a new dict, of text to ids.&#10;    license_id = 0&#10;    for license_text in licenses_map.keys():&#10;&#10;        licenses_map_ids[license_text] = license_id #So we can get the license ID later.&#10;&#10;        license_description = standard_licenses.get_is_standard_license(license_text) #Returns &quot;&quot; if it is not recognised as a standard license.&#10;        #If the license text is short (usually an error),&#10;        #use it for the description to make things clearer:&#10;        if((len(license_description) == 0) and len(license_text) &lt; 50):&#10;            license_description = license_text&#10;&#10;        # This will look like this:&#10;        # 'id','description',opensource,'license_text',false,false,false,'creditrequired'&#10;        license_row = u&quot;%d,%s,false,%s,false,false,false,%s&quot; % (license_id, quote_for_sql(license_description), quote_for_sql(escape_text_for_sql(license_text)),  empty_text)&#10;        license_id += 1&#10;&#10;        #Add the row to the database:&#10;        query = u&quot;INSERT INTO \&quot;licenses\&quot; (\&quot;license_id\&quot;,\&quot;description\&quot;,\&quot;open_source\&quot;,\&quot;license_text\&quot;,\&quot;dynamic_linking_requires_source\&quot;,\&quot;static_linking_requires_source\&quot;,\&quot;modifications_must_be_released\&quot;,\&quot;credit_required\&quot;) VALUES (%s)&quot; % license_row&#10;       &#10;        #dlg = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK)&#10;        #dlg.format_secondary_text(query)&#10;        #ret = dlg.run()&#10;        #dlg.destroy()&#10;&#10;        execute_sql_query(query)&#10;&#10;        #rows_licenses += license_row + placeholder_newline #Use a placeholder that we can later convert to an escaped newline, because minidom doesn't do this for us, though it escapes other things.&#10;&#10;    print_debug( &quot;count of licenses=%d&quot; % license_id )&#10;&#10;    #Look at each package:&#10;    dependency_id = 0&#10;    for package_name in packages_dict.keys():&#10;        #print_debug( &quot;used: &quot;, package_data.name )&#10;&#10;&#10;        license_id = &quot;NULL&quot; #empty integer value.&#10;&#10;        package_data = packages_dict[package_name]&#10;        if(package_data.license_text):&#10;            try:&#10;                license_id = licenses_map_ids[package_data.license_text]&#10;            except:&#10;                print_debug( &quot;Error while determining license_id.&quot; )&#10;&#10;        # This will look like this:&#10;        # 'name','comments','description','license_id',,'version','parent_package','tarball_uri'&#10;        package_row = u&quot;%s,%s,%s,%s,%s,%s,%s,%s,%s&quot; % ( quote_for_sql(package_data.name), empty_text, quote_for_sql(escape_text_for_sql(package_data.description)), license_id, quote_for_sql(package_data.version), quote_for_sql(package_data.source_package_name), quote_for_sql(package_data.tarball_uri), quote_for_sql(package_data.diff_uri), boolean_for_sql(package_data.license_text_simplified) )&#10;&#10;        if(package_row):&#10;            #Add the row to the database:&#10;            query = u&quot;INSERT INTO \&quot;packages\&quot; (\&quot;name\&quot;,\&quot;comments\&quot;,\&quot;description\&quot;,\&quot;license_id\&quot;,\&quot;version\&quot;,\&quot;parent_package\&quot;,\&quot;tarball_uri\&quot;,\&quot;diff_uri\&quot;,\&quot;licensed_simplified\&quot;) VALUES (%s)&quot; % package_row&#10;            execute_sql_query(query)&#10;&#10;&#10;            #rows_packages += package_row + placeholder_newline #Use a placeholder that we can later convert to an escaped newline, because minidom doesn't do this for us, though it escapes other things.&#10;           &#10;        # Dependencies:&#10;&#10;        if(package_data.dependencies):&#10;            for dependency in package_data.dependencies:&#10;&#10;                # This will look like this:&#10;                # 'dependency_id', 'dependency_name', 'package_name',&#10;                dependency_row = u&quot;%d, %s, %s&quot; % (dependency_id, quote_for_sql(dependency), quote_for_sql(package_data.name))&#10;                dependency_id += 1&#10;                #rows_package_dependencies += dependency_row + placeholder_newline&#10;&#10;                #Add the row to the database:&#10;                query = u&quot;INSERT INTO \&quot;package_dependencies\&quot; (\&quot;package_dependencies_id\&quot;,\&quot;package_name\&quot;,\&quot;parent_package_name\&quot;) VALUES (%s)&quot; % dependency_row&#10;                execute_sql_query(query)&#10;&#10;&#10;    debugwindow.debug_button_close.set_sensitive(True) #Let the user close the window. Don't close it automatically, so that they can read it and close when ready.&#10;&#10;if __name__ == &quot;__main__&quot;:&#10;    main()&#10;" title="Begin Scan" sequence="2"/></data_layout_group><data_layout_group name="details" columns_count="2" sequence="2" title="Details"><data_layout_item name="description" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="comments" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="version" editable="true" use_default_formatting="true" sequence="3"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="parent_package" editable="true" use_default_formatting="true" sequence="4"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="tarball_uri" editable="true" use_default_formatting="true" sequence="5"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_button script="uri = record[&quot;tarball_uri&quot;]&#10;&#10;import urllib2 #Library to do downloads.&#10;request = urllib2.Request(uri)&#10;request.add_header('Accept-encoding', 'gzip')&#10;&#10;try:&#10;    response = urllib2.urlopen(request)&#10;    &#10;    # get data, and gunzip it if it is encoded&#10;    gzipped_data = response.read()&#10;    &#10;    filename_local = &quot;/tmp/temp.tar.gz&quot;&#10;    localfile = open(filename_local, 'wb')&#10;    localfile.write(gzipped_data)&#10;    localfile.close()&#10;&#10;except urllib2.HTTPError, e:&#10;    print &quot;error: Could not open url: %s&quot; % uri&#10;    raise&#10;&#10;import os&#10;os.system(&quot;file-roller %s&amp;&quot; % filename_local)" title="Open Tarball" sequence="6"/><data_layout_item name="diff_uri" editable="true" use_default_formatting="true" sequence="7"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_button script="#This is a copy/paste of the Open Tarball script.&#10;&#10;uri = record[&quot;diff_uri&quot;]&#10;&#10;import urllib2 #Library to do downloads.&#10;request = urllib2.Request(uri)&#10;request.add_header('Accept-encoding', 'gzip')&#10;&#10;try:&#10;    response = urllib2.urlopen(request)&#10;    &#10;    # get data, and gunzip it if it is encoded&#10;    gzipped_data = response.read()&#10;    &#10;    filename_local = &quot;/tmp/temp.diff.gz&quot;&#10;    localfile = open(filename_local, 'wb')&#10;    localfile.write(gzipped_data)&#10;    localfile.close()&#10;&#10;except urllib2.HTTPError, e:&#10;    print &quot;error: Could not open url: %s&quot; % uri&#10;    raise&#10;&#10;import os&#10;os.system(&quot;file-roller %s&amp;&quot; % filename_local)" title="Open Diff" sequence="8"/><data_layout_group name="group_license" columns_count="1" sequence="9" title="License"><data_layout_item name="license_id" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="open_source" relationship="license" editable="true" use_default_formatting="true" sequence="3"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true" sequence="4"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item></data_layout_group></data_layout_group><data_layout_notebook name="notebook_related_packages" columns_count="1" sequence="3"><data_layout_portal relationship="dependencies" name="" columns_count="1" sequence="1"><portal_navigation_relationship relationship="package"/><data_layout_item name="package_name" editable="true" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" relationship="package" related_relationship="license" editable="true" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/><title_custom use_custom="true" title="License Description"/></data_layout_item></data_layout_portal><data_layout_portal relationship="dependency of" name="" columns_count="1" sequence="2"><portal_navigation_relationship relationship="parent_package"/><data_layout_item name="parent_package_name" use_default_formatting="true" sequence="1"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/></data_layout_item><data_layout_item name="description" relationship="parent_package" related_relationship="license" use_default_formatting="true" sequence="2"><formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6"/><title_custom use_custom="true" title="License Description"/></data_layout_item></data_layout_portal></data_layout_notebook></data_layout_group></data_layout_groups></data_layout></data_layouts><reports/>
+class DuplicateChooserWindow(gtk.Dialog):
 
-</table><groups><!--These are only used when recreating a database from an example file. The actual access-control is on the server, of course.--></groups></glom_document>
+    def __init__(self, current_license_id):    
+        # Call the base class's constructor, because python doesn't do that automatically:
+        gtk.Dialog.__init__(self)
+
+        # Sets the border width of the window.
+        self.set_border_width(6)
+        self.vbox.set_border_width(6)
+    
+
+        # Add a label
+        label = gtk.Label("Current License ID: %s" % current_license_id)
+        label.set_alignment(0.0, 0.5)
+        self.vbox.pack_start(label)
+        label.show()
+
+        #Pack an hbox in the dialog's vbox area:
+        self.hbox = gtk.HBox()
+        self.hbox.set_spacing(6)
+        self.vbox.pack_start(self.hbox, False, False)
+        self.hbox.show()
+
+        label = gtk.Label("Duplicate License:")
+        label.set_alignment(0.0, 0.5)
+        self.hbox.pack_start(label, False, False)
+        label.show()
+
+        #ComboBox:
+        self.combo_model = gtk.ListStore(int, str) #An ID column (0) and a description column (1)
+        self.combo_model_sorted = gtk.TreeModelSort(self.combo_model) 
+        self.combo_model_sorted.set_sort_column_id(0, gtk.SORT_ASCENDING) #Sort by ID.
+        self.combo = gtk.ComboBox(self.combo_model_sorted)
+
+        #ComboBox ID column:
+        cell = gtk.CellRendererText()
+        self.combo.pack_start(cell, True)
+        self.combo.add_attribute(cell, 'text', 0)  
+
+        #ComboBox Description column:
+        cell = gtk.CellRendererText()
+        self.combo.pack_start(cell, True)
+        self.combo.add_attribute(cell, 'text', 1) 
+
+
+        self.hbox.pack_start(self.combo, False, False)
+        self.combo.show()
+        self.fill_combo()
+
+        #Add response buttons:
+        self.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        self.add_button(gtk.STOCK_OK, gtk.RESPONSE_OK)
+
+        #Make sure that clicking the window manager close button actually closes the window:
+        self.connect("delete_event", self.delete_event)
+
+
+    def get_chosen_license_id(self):
+        sort_model_iter = self.combo.get_active_iter() 
+        if(sort_model_iter == None):
+            return None;
+
+        model_iter = self.combo_model_sorted.convert_iter_to_child_iter(None, sort_model_iter) #None is a necessary parameter, caused by a pygtk backwards-compatibilty issue. It's normal.
+        if(model_iter == None):
+            return None;
+
+        val_id = self.combo_model[model_iter][0] #The ID.
+        print val_id
+        return val_id
+
+
+    def fill_combo(self):
+        query = "SELECT \"license_id\", \"description\" FROM %s" % record.table_name #"licenses"
+        command = gda.Command(query)
+        data_model = record.connection.execute_single_command(command)
+
+        if(data_model and data_model.get_n_rows() and data_model.get_n_columns()):
+            col_index_id = 0 #Note: hard-coded.
+            col_index_description = 1 #Note: hard-coded.
+            for row_index in range(data_model.get_n_rows()):
+                val_id = data_model.get_value_at(col_index_id, row_index).get()
+                val_description = data_model.get_value_at(col_index_description, row_index).get()
+
+                self.combo_model.append([val_id, val_description])
+
+    def delete_event(self, widget, event, data=None):
+        self.response(gtk.RESPONSE_CANCEL)
+        return True #Do not destroy the window.
+
+
+def main():
+    
+    current_license_id = "%d" % record["license_id"]
+
+    #Show the dialog:
+    question_window = DuplicateChooserWindow(current_license_id)
+    response = question_window.run()
+    question_window.hide()
+
+    if(response != gtk.RESPONSE_OK):
+        return
+
+    #Get the input:
+    chosen_license_id = question_window.get_chosen_license_id()
+    if(chosen_license_id == None):
+        return
+
+    print "debug: current_license_id=%s, chosen_license_id=%s" % (current_license_id, chosen_license_id)
+
+    if(chosen_license_id == current_license_id):
+        messagedialog = gtk.MessageDialog(type=gtk.MESSAGE_ERROR, message_format="ID values match", buttons=gtk.BUTTONS_OK)
+        messagedialog.format_secondary_text("The chosen license ID is the same as the current license ID. Please choose another license ID")
+        messagedialog.run()
+        messagedialog.hide()
+        messagedialog.destroy() #This is horrible. pygtk/python shouldn't require us to explicitly destroy things.
+        return
+
+    #Change any uses of the current license id in packages:
+    query = "UPDATE \"packages\" SET \"license_id\" = '%s' WHERE \"packages\".\"license_id\"='%s'" % (chosen_license_id, current_license_id)
+    print "debug: %s" % query
+    command = gda.Command(query)
+    record.connection.execute_single_command(command)
+
+    #Delete the current license record (because it is no longer used):
+ 
+    licenses_table_name = record.table_name #"licenses"
+    query = "DELETE FROM \"%s\" WHERE \"%s\".\"license_id\" = '%s'" % (licenses_table_name, licenses_table_name, current_license_id)
+    print "debug: %s" % query
+    command = gda.Command(query)
+    record.connection.execute_single_command(command)
+
+# If the program is run directly or passed as an argument to the python
+# interpreter then create a HelloWorld instance and show it
+if __name__ == "__main__":
+    main()
+
+   
+    
+
+ 
+</script>
+                  <formatting/>
+                </data_layout_button>
+                <data_layout_text>
+                  <text/>
+                  <formatting/>
+                </data_layout_text>
+              </data_layout_group>
+              <data_layout_group name="characteristics" title="Characteristics">
+                <data_layout_item name="open_source" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="dynamic_linking_requires_source" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="static_linking_requires_source" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="modifications_must_be_released" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="credit_required" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="per_seat_license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_group>
+            <data_layout_item name="license_text" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_portal relationship="packages">
+              <data_layout_item name="name" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+            </data_layout_portal>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+    </data_layouts>
+    <reports/>
+    <print_layouts/>
+  </table>
+  <table name="package_dependencies" hidden="true" title="Package Dependencies">
+    <example_rows/>
+    <fields>
+      <field name="package_dependencies_id" primary_key="true" unique="true" auto_increment="true" type="Number" title="package_dependencies ID">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+      <field name="package_name" type="Text" title="Package">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related="true" choices_related_relationship="package" choices_related_field="name" choices_related_show_all="true">
+          <choices_related_extra_layout>
+            <data_layout_groups>
+              <data_layout_group>
+                <data_layout_item name="comments" editable="true" use_default_formatting="true">
+                  <formatting/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_groups>
+          </choices_related_extra_layout>
+        </formatting>
+      </field>
+      <field name="parent_package_name" type="Text" title="Parent Package">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+    </fields>
+    <relationships>
+      <relationship name="package" key="package_name" other_table="packages" other_key="name" title="Package"/>
+      <relationship name="parent_package" key="parent_package_name" other_table="packages" other_key="name" title="Parent Package"/>
+    </relationships>
+    <data_layouts>
+      <data_layout name="details" parent_table="package_dependencies">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="package_dependencies_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+            </data_layout_group>
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="parent_package_name" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_group name="package">
+                <data_layout_item name="package_name" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="name" relationship="package" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_group>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+    </data_layouts>
+    <reports/>
+    <print_layouts/>
+  </table>
+  <table name="packages" default="true" title="Packages">
+    <example_rows/>
+    <fields>
+      <field name="name" primary_key="true" unique="true" type="Text" title="Name">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="comments" type="Text" title="Comments">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related="true" choices_related_show_all="true"/>
+      </field>
+      <field name="description" type="Text" title="Description">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related="true" choices_related_show_all="true"/>
+      </field>
+      <field name="license_id" type="Number" title="License ID">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related="true" choices_related_relationship="license" choices_related_field="license_id" choices_related_show_all="true">
+          <choices_related_extra_layout>
+            <data_layout_groups>
+              <data_layout_group>
+                <data_layout_item name="description" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_groups>
+          </choices_related_extra_layout>
+        </formatting>
+      </field>
+      <field name="version" type="Text" title="Version">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="parent_package" type="Text" title="Parent Package">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="tarball_uri" type="Text" title="Tarball URI">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="diff_uri" type="Text" title="Diff URI">
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+      </field>
+      <field name="licensed_simplified" default_value="FALSE" type="Boolean" title="Licenses Simplified Automatically">
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+      </field>
+    </fields>
+    <relationships>
+      <relationship name="dependencies" key="name" other_table="package_dependencies" other_key="parent_package_name" auto_create="true" allow_edit="true" title="Dependencies"/>
+      <relationship name="license" key="license_id" other_table="licenses" other_key="license_id" title="License"/>
+      <relationship name="dependency of" key="name" other_table="package_dependencies" other_key="package_name" title="Dependency Of"/>
+    </relationships>
+    <data_layouts>
+      <data_layout name="details" parent_table="package">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="name" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+            </data_layout_group>
+            <data_layout_group name="details" title="Details">
+              <data_layout_item name="description" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_group name="license" title="License">
+                <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_group>
+            <data_layout_group name="Dependencies">
+              <data_layout_portal relationship="dependencies">
+                <data_layout_item name="package_name" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="package" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_group>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+      <data_layout name="list" parent_table="packages">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_item name="name" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="description" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="version" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+      <data_layout name="details" parent_table="packages">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="name" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_button title="Begin Scan">
+                <script>#!/usr/bin/env python
+
+#
+# Copyright (c) 2006 Openismus GmbH
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with PythonCAD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+import gtk
+import gda
+
+import apt # For apt.Cache.
+import apt_pkg # For apt_pkg.GetPkgSourceList
+import sys
+import os
+import difflib
+
+class DebugWindow:
+    debug_window = None
+    debug_textview = None
+    debug_button_close = None
+
+    def __init__(self):
+        #print "debug: Creating debug window."
+        self.debug_window = gtk.Window()
+        vbox = gtk.VBox()
+        vbox.set_spacing(6)
+        vbox.show()
+        self.debug_window.add(vbox);
+
+        scrolledwindow = gtk.ScrolledWindow()
+        scrolledwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        scrolledwindow.show()
+        vbox.pack_start(scrolledwindow)
+
+        self.debug_textview = gtk.TextView()
+        self.debug_textview.show()
+        scrolledwindow.add(self.debug_textview) #We don't need to use add_with_viewport() with a TextView.
+       
+        hbox = gtk.HBox()
+        hbox.show()
+        vbox.pack_start(hbox, False, False)
+
+        self.debug_button_close = gtk.Button(stock=gtk.STOCK_CLOSE)
+        self.debug_button_close.set_sensitive(False) #Only let the user close this window when we are finished.
+        self.debug_button_close.show()
+        hbox.pack_end(self.debug_button_close, False, False)
+
+        self.debug_button_close.connect("clicked", self.on_debug_button_clicked, None)
+      
+        self.debug_window.set_default_size(400, 400) #Make it big enough.
+        self.debug_window.set_title(u"Repository Analyzer debug output")
+
+    def append_text(self, text):
+        #Add the text to the window:
+        textbuffer = self.debug_textview.get_buffer()
+        enditer = textbuffer.get_end_iter()
+        textbuffer.insert(enditer, text + "\n")
+
+        #Make sure the the last message is always visible:
+        enditer = textbuffer.get_end_iter()
+        self.debug_textview.scroll_to_iter(enditer, 0)
+
+        #Update the UI even during intensive processing:
+        self.refresh_ui()
+
+    def refresh_ui(self):
+        while gtk.events_pending():
+            gtk.main_iteration()
+
+    def on_debug_button_clicked(self, *args):
+        self.debug_window.destroy()
+
+
+
+debugwindow = DebugWindow()
+
+def print_debug(text):
+
+    debugwindow.debug_window.show() #Only show it when we first use it. TODO: How will it be destroyed if the button is never clicked, because it is never shown?
+    debugwindow.append_text(text)
+
+    #print(text)
+
+class StandardLicenses(object):
+
+    def __init__(self):
+
+        self.license_dict = {}
+
+        license_name_gpl1 = u"GPL1"
+        license_text_gpl1 = u"GNU GENERAL PUBLIC LICENSE\n       Version 1, February 1989"  #We stop the extract here, because there are versions with different FSF addresses.
+        self.add_license(license_name_gpl1, license_text_gpl1);
+
+        license_name_gpl2 = u"GPL2"
+        license_text_gpl2 = u"GNU GENERAL PUBLIC LICENSE\n		       Version 2, June 1991"  #We stop the extract here, because there are versions with different FSF addresses.
+        self.add_license(license_name_gpl2, license_text_gpl2);
+
+        license_name_lgpl2 = u"LGPL2"
+        license_text_lgpl2 = u"GNU LIBRARY GENERAL PUBLIC LICENSE\n		       Version 2, June 1991"  #We stop the extract here, because there are versions with different FSF addresses.
+        self.add_license(license_name_lgpl2, license_text_lgpl2);
+
+        license_name_lgpl2p1 = u"LGPL2.1"
+        license_text_lgpl2p1 = u"GNU LESSER GENERAL PUBLIC LICENSE\n		       Version 2.1, February 1999" #We stop the extract here, because there are versions with different FSF addresses.
+        self.add_license(license_name_lgpl2p1, license_text_lgpl2p1);
+
+        license_name_mpl = u"MPL"
+        license_text_mpl = u"MOZILLA PUBLIC LICENSE"
+        self.add_license(license_name_mpl, license_text_mpl);
+
+        license_name_boost = u"Boost"
+        license_text_boost = u"Boost Software License - Version 1.0 - August 17th, 2003"
+        self.add_license(license_name_boost, license_text_boost);
+
+        license_name_mit = u"MIT"
+        license_text_mit = u"""Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the \"Software\"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following conditions"""
+        self.add_license(license_name_mit, license_text_mit);
+
+        license_name_x11 = u"X11" #Seems to be different to MIT. Sometimes mentions Keith Packard explicitly.
+        license_text_x11 = u"""Permission to use, copy, modify, distribute, and sell this software and its
+documentation for any purpose is hereby granted without fee, provided that
+the above copyright notice appear in all copies and that both that
+copyright notice and this permission notice appear in supporting
+documentation""" #Stop here, before an additional explicit name mention, forbidding use of the author's name, usually Keith Packard.
+        self.add_license(license_name_x11, license_text_x11);
+
+        license_name_bsd = u"BSD"
+        license_text_bsd = u"""Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.""" #Stop here, before mention of a specific organisation name, usually forbidding use of that name.
+        self.add_license(license_name_bsd, license_text_bsd);
+
+        license_name_bsd_alt = u"BSD_alternate" #Almost identical - just uses - instead of 1. and 2.
+        license_text_bsd_alt = u"""Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+- Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+
+- Redistributions in binary form must reproduce the above copyright
+notice, this list of conditions and the following disclaimer in the
+documentation and/or other materials provided with the distribution.""" #Stop here, before mention of a specific organisation name, usually forbidding use of that name.
+        self.add_license(license_name_bsd_alt, license_text_bsd_alt);
+
+    def add_license(self, name, text):
+        self.license_dict[name] = self.remove_excess_whitespace(text);
+
+
+    def remove_excess_whitespace(self, text):
+        return u" ".join(text.split()) #remove multiple white spaces and new lines, tabs etc. and replace by a single whitespace
+
+    def get_is_standard_license(self, text):
+        #Look for each of the licenses texts (part of them, anyway) in the given text,
+        #and return the name of any standard license found.
+        for key in self.license_dict.keys():
+            standard_license_text = self.license_dict[key]
+            pos = self.remove_excess_whitespace(text).find(standard_license_text)
+            if((pos != -1) and (pos &lt; 200)): #If the starting text appeared much later, it would be very odd.
+                #print_debug( "debug: get_is_standard_license(): found: %s" % key )
+                return key
+
+        #print_debug( "debug: get_is_standard_license(): text not identified\n %s" % text )
+        return u""
+
+    def get_are_same_standard_license(self, texta, textb, license_name_out):
+        standard_name_a = self.get_is_standard_license(texta)
+        if(len(standard_name_a) == 0): 
+            return False
+
+        standard_name_b = self.get_is_standard_license(textb)
+        if(standard_name_a == standard_name_b):
+            license_name_out = standard_name_a
+            return True
+        else:
+            license_name_out = u""
+            return False
+
+
+
+
+
+#### From James Henstridge's httpcache.py, with ugly changes by me (Murray Cumming:
+
+'''Very simple minded class that can be used to maintain a cache of files
+downloaded from web servers.  It is designed to reduce load on web servers,
+and draws ideas from feedparser.py.  Strategies include:
+    - If a resource has been checked in the last 6 hours, consider it current.
+    - support gzip transfer encoding.
+    - send If-Modified-Since and If-None-Match headers when validating a
+      resource to reduce downloads when the file has not changed.
+    - honour Expires headers returned by server.  If no expiry time is
+      given, it defaults to 6 hours.
+'''
+
+import os
+import urllib2
+import urlparse
+import time
+import rfc822
+import StringIO
+try:
+    import gzip
+except ImportError:
+    gzip = None
+
+try:
+    import xml.dom.minidom
+except ImportError:
+    raise SystemExit, 'Python xml packages are required but could not be found'
+
+class HttpCache:
+
+    def __init__(self):
+        self._cache = HttpCache.Cache()
+
+  
+
+  
+
+    class Cache:
+
+        class CacheEntry:
+            def __init__(self, uri, local, modified, etag, expires=0):
+                self.uri = uri
+                self.local = local
+                self.modified = modified
+                self.etag = etag
+                self.expires = expires
+
+        cachedir = os.path.join(os.environ['HOME'], '.jhbuild', 'cache')
+        # default to a 6 hour expiry time.
+        default_age = 6 * 60 * 60
+
+        def __init__(self, cachedir=None):
+            if cachedir:
+                self.cachedir = cachedir
+            if not os.path.exists(self.cachedir):
+                os.makedirs(self.cachedir)
+            self.entries = {}
+
+        def read_cache(self):
+            self.entries = {}
+            cindex = os.path.join(self.cachedir, 'index.xml')
+            try:
+                document = xml.dom.minidom.parse(cindex)
+            except:
+                return # treat like an empty cache
+            if document.documentElement.nodeName != 'cache':
+                document.unlink()
+                return # doesn't look like a cache
+
+            for node in document.documentElement.childNodes:
+                if node.nodeType != node.ELEMENT_NODE: continue
+                if node.nodeName != 'entry': continue
+                uri = node.getAttribute('uri')
+                local = str(node.getAttribute('local'))
+                if node.hasAttribute('modified'):
+                    modified = node.getAttribute('modified')
+                else:
+                    modified = None
+                if node.hasAttribute('etag'):
+                    etag = node.getAttribute('etag')
+                else:
+                    etag = None
+                expires = self._parse_isotime(node.getAttribute('expires'))
+                # only add to cache list if file actually exists.
+                if os.path.exists(os.path.join(self.cachedir, local)):
+                    self.entries[uri] = HttpCache.Cache.CacheEntry(uri, local, modified,
+                                                   etag, expires)
+            document.unlink()
+
+        def _parse_isotime(self, string):
+            if string[-1] != 'Z':
+                return time.mktime(time.strptime(string, '%Y-%m-%dT%H:%M:%S'))
+            tm = time.strptime(string, '%Y-%m-%dT%H:%M:%SZ')
+            return time.mktime(tm[:8] + (0,)) - time.timezone
+
+        def _format_isotime(self, tm):
+            return time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime(tm))
+
+        def write_cache(self):
+            cindex = os.path.join(self.cachedir, 'index.xml')
+
+
+            document = xml.dom.minidom.Document()
+            document.appendChild(document.createElement('cache'))
+            node = document.createTextNode('\n')
+            document.documentElement.appendChild(node)
+            for uri in self.entries.keys():
+                entry = self.entries[uri]
+                node = document.createElement('entry')
+                node.setAttribute('uri', entry.uri)
+                node.setAttribute('local', entry.local)
+                if entry.modified:
+                    node.setAttribute('modified', entry.modified)
+                if entry.etag:
+                    node.setAttribute('etag', entry.etag)
+                node.setAttribute('expires', self._format_isotime(entry.expires))
+                document.documentElement.appendChild(node)
+
+                node = document.createTextNode('\n')
+                document.documentElement.appendChild(node)
+
+            document.writexml(open(cindex, 'w'))
+            document.unlink()
+
+        def _make_filename(self, uri):
+            '''picks a unique name for a new entry in the cache.
+            Very simplistic.'''
+            # get the basename from the URI
+            parts = urlparse.urlparse(uri, allow_fragments=False)
+            base = parts[2].split('/')[-1]
+            if not base: base = 'index.html'
+
+            is_unique = False
+            while not is_unique:
+                is_unique = True
+                for uri in self.entries.keys():
+                    if self.entries[uri].local == base:
+                        is_unique = False
+                        break
+                if not is_unique:
+                    base = base + '-'
+            return base
+
+
+        def _parse_date(self, date):
+            tm = rfc822.parsedate_tz(date)
+            if tm:
+                return rfc822.mktime_tz(tm)
+            return 0
+
+
+        def load(self, uri, nonetwork=False):
+            '''Downloads the file associated with the URI, and returns a local
+            file name for contents.'''
+            # pass file URIs straight through -- no need to cache them
+            parts = urlparse.urlparse(uri)
+            if parts[0] in ('', 'file'):
+                return parts[2]
+
+            now = time.time()
+
+            # is the file cached and not expired?
+            self.read_cache()
+            entry = self.entries.get(uri)
+            if entry:
+                if (nonetwork or now &lt;= entry.expires):
+                    return os.path.join(self.cachedir, entry.local)
+
+            if nonetwork:
+                raise RuntimeError('file not in cache, but not allowed '
+                               'to check network')
+
+            request = urllib2.Request(uri)
+            if gzip:
+                request.add_header('Accept-encoding', 'gzip')
+            if entry:
+                if entry.modified:
+                    request.add_header('If-Modified-Since', entry.modified)
+                if entry.etag:
+                    request.add_header('If-None-Match', entry.etag)
+
+            try:
+                response = urllib2.urlopen(request)
+
+                # get data, and gunzip it if it is encoded
+                data = response.read()
+                ## if gzip and response.headers.get('Content-Encoding', '') == 'gzip':
+                ##    try:
+                ##        data = gzip.GzipFile(fileobj=StringIO.StringIO(data)).read()
+                ##    except:
+                ##        data = ''
+    
+                expires = response.headers.get('Expires')
+
+                # add new content to cache
+                entry = HttpCache.Cache.CacheEntry(uri, self._make_filename(uri),
+                                   response.headers.get('Last-Modified'),
+                                   response.headers.get('ETag'))
+                filename = os.path.join(self.cachedir, entry.local)
+                open(filename, 'wb').write(data)
+            except urllib2.HTTPError, e:
+                if e.code == 304: # not modified; update validated
+                    expires = e.hdrs.get('Expires')
+                    filename = os.path.join(self.cachedir, entry.local)
+                else:
+                    raise
+
+            # set expiry date
+            entry.expires = self._parse_date(expires)
+            if entry.expires &lt;= now: # ignore expiry times that have already passed
+                entry.expires = now + self.default_age
+    
+            # save cache
+            self.entries[uri] = entry
+            self.write_cache()
+            return filename
+
+    _cache = None
+    def load(self, uri, nonetwork=False):
+        '''Downloads the file associated with the URI, and returns a local
+        file name for contents.'''
+        if not self._cache: self._cache = Cache()
+        return self._cache.load(uri, nonetwork=nonetwork)
+
+
+
+
+
+
+
+#### From package_data.py:
+
+import apt # For apt.Cache.
+import apt_pkg # For apt_pkg.GetPkgSourceList
+
+import sys
+import os
+import dircache
+
+import urllib2 #Library to do downloads.
+import os.path #For split()
+import gzip
+import tarfile
+import StringIO
+
+#We create globals object because Python makes it so difficult to have static class methods.
+#(A patch would be welcome if you disagree.) murrayc.
+standard_licenses = StandardLicenses()
+the_httpcache = HttpCache();
+
+class PackageData:
+    def __init__(self, apt_cache, apt_srcrecords, candver):
+
+        # Save the name and version:
+        self.name = candver.ParentPkg.Name
+        self.version = candver.VerStr
+
+        # Get the description and tarball URI:
+        package = apt_cache[self.name]
+        self.description = package.description
+
+        #print_debug( "  Name %s" % package.Name )
+        self.source_package_name = package.sourcePackageName
+
+        #Get the path of the source tarball, using the apt-pkg API:
+        srcrec = apt_srcrecords.Lookup(self.source_package_name)
+        if(srcrec == None):
+            apt_srcrecords.Restart() #Michael Vogt said this might stop Lookup() from failing sometimes.
+            srcrec = apt_srcrecords.Lookup(self.source_package_name) #Try again
+
+        if srcrec:
+            # TODO: Is this really the only way to get the path?
+            # It's ugly.
+            #
+            for (the_md5hash, the_size, the_path, the_type) in apt_srcrecords.Files:
+                if(the_type == "tar"): #Possible types seems to be "tar", "dsc", and "diff"
+                    self.tarball_uri = the_path
+                    # TODO: In Ubuntu Edgy, we should be able to get the full URI by doing this,
+                    # according to Michael Vogt:
+                    # self.tarball_uri = srcrec.Index.ArchiveURI(self.tarball_uri)
+                elif(the_type == "diff"):
+                    self.diff_uri = the_path
+        else:
+            print_debug( "  debug: apt_srcrecords.Lookup() failed for package %s. " % self.source_package_name )
+
+
+        # Note: This is broken when Dir::State::status is not set: It returns huge false, irrelevant dependencies.
+        # Get the dependencies of this package:
+        # TODO: Get direct dependencies only?
+        dependslist = candver.DependsList
+
+        #Look at each dependency:
+        self.dependencies = set() #If we don't do this then it seems to use the list from the last instantiation of this class, so the list keeps getting bigger.
+        for dep in dependslist.keys():
+
+            # get the list of each dependency object
+            for depVerList in dependslist[dep]:
+
+                for z in depVerList:
+
+                    # get all TargetVersions of
+                    # the dependency object
+                    for tpkg in z.AllTargets():
+                        self.dependencies.add(tpkg.ParentPkg.Name)
+                        #TODO: This does not always seem to be the same name that we get for the parent package.
+                        #       Sometimes there is no package with this exact name.
+                        #       Or maybe that's a problem with the repository.
+
+        #print_debug( "  debug: dependencies of package %s: %s" % (self.name, self.dependencies) )
+
+
+        self.license_text = ""
+        license_found = False
+        #repository_base_uri = "http://archive.ubuntu.com/ubuntu/" # TODO: Get this from python-apt somehow.
+        repository_base_uri = "http://repository.maemo.org/" # Remove this hack when we have ArchiveURI() in python-apt in Ubuntu Edgy.
+
+        if(self.diff_uri):
+            full_diff_uri = repository_base_uri + self.diff_uri
+            self.diff_uri = full_diff_uri #Store the full URI so we can use it in scripts in the Glom database if we like.
+
+        #Try to get the license text by looking at the source tarball:
+        if(self.tarball_uri):
+
+             # Michael Vogt says that full_uri = srcrec.Index.ArchiveURI(tarball_uri) gives the whole thing, but that will only work in Ubuntu Edgy (not Dapper)
+
+            full_uri = repository_base_uri + self.tarball_uri
+            self.tarball_uri = full_uri #Store the full URI so we can use it in scripts in the Glom database if we like.
+
+            license_found = self.get_license_from_tarball(full_uri)
+            if(license_found == False):
+                print_debug( "debug: package: %s, license file not found in tarball: %s" % (self.name, full_uri) )
+
+        #Try to get the license from the .diff instead:
+        if(license_found == False and self.diff_uri):
+
+            #print_debug( "  debug: Trying the .diff instead: URI=%s" % self.diff_uri )
+            license_found = self.get_license_from_diffgz(self.diff_uri)
+            if(license_found == False):
+                print_debug( "    debug: package: %s, license file not found in diff: %s" % (self.name, self.diff_uri) )
+
+        self.license_found = license_found
+
+
+    def get_license_from_file(self, file_object):
+        license_found = False
+
+        data = file_object.read()
+        if((data == None) or (len(data) == 0)):
+            text = u"unknown (empty)"
+        else:
+            text = self.convert_to_unicode_with_fallbacks(data)
+            if(len(text) == 0):
+                text = u"unknown (encoding error)"
+            else:
+                license_found = True;
+         
+        self.license_text = text
+
+        #Remove any unnecessary leading or trailing whitespace:
+        self.license_text = self.license_text.strip();
+
+        print_debug( "  debug: is standard license?: %s" % standard_licenses.get_is_standard_license(self.license_text) )
+
+        return license_found
+
+
+    def convert_to_unicode_with_fallbacks(self, data, encoding=None):       
+        try:
+            if(encoding == None):
+                result = unicode(data)
+            else:
+                result = unicode(data, encoding)
+
+            return result
+        except UnicodeError, ex:
+            result = ""
+            print_debug( "  debug: encoding error: encoding=%s" % str(encoding) )
+
+        #Decoding failed if we got this far:
+
+        #Fall back to other encodings:
+        if(encoding == None):
+           possible_encodings = ("utf-8", "ascii", "latin_1", "utf_16", "iso8859_2")
+           for enc in possible_encodings:
+               result = self.convert_to_unicode_with_fallbacks(data, enc);
+               if(len(result) != 0):
+                   print_debug( "fallback encoding successful: %s" % enc )
+                   return result;
+
+           print_debug( "debug: encoding error: All fallback codecs failed." )
+
+        return u"";
+
+    def get_license_from_tarball_tarfile(self, the_tarfile):
+        license_found = False
+
+        try:
+            for tarinfo in the_tarfile:
+                if(tarinfo.isreg()):
+                    filepath = tarinfo.name
+                    (directory, filename) = os.path.split(filepath)
+
+                    # Find a license file and read its contents:
+
+                    previously_found_pathdir = ""
+                    if(filename in self.possible_license_files): #TODO: Make this case-insensitive somehow?
+                        print_debug( "debug: package: %s, license file found in tarball. Attempting read: %s" % (self.name, filename) )
+
+                        fileobject = the_tarfile.extractfile(tarinfo)
+
+                        previous_found_license = self.license_text
+                        is_higher_than_previous = ( len(previously_found_pathdir) == 0 or (len(directory) &lt; len(previously_found_pathdir)) )
+
+                        license_found_this = self.get_license_from_file(fileobject)
+                        if(license_found_this):
+                            license_found = True
+                            #print_debug( "  debug: read successful." )
+
+                            if(is_higher_than_previous):
+                                previously_found_pathdir = directory
+                            else:
+                                # Restore the one we found earlier
+                                # (it was at a higher directory level, so it's more likely to be what we want.
+                                self.license_text = previous_found_license;
+                                #print_debug( "  debug1: restoring previous found text" )
+                        else:
+                            print_debug( "  debug: read failed. Error, if any: %s" %  self.license_text  )
+                            #Restore the last text if any, including the last "unknown" error text,
+                            #so we prefer previous found license text, or errors from higher-up files:
+                            if( license_found or ((is_higher_than_previous == False) and len(previous_found_license)) ):
+                                 self.license_text = previous_found_license;
+                                 #print_debug( "  debug2: restoring previous found text" )
+
+                            
+
+        except tarfile.TarError, ex:
+            print_debug( "Error while extracting tarball: %s" % str(ex) )
+
+        #print_debug( "debug: File found in tarball?: %s" % str(license_found) )
+
+        #If no license was found, try looking for nested tarballs.
+        #This seems to happen quite often - the tarball contains a tarball.
+        if(license_found == False):
+            try:
+                for tarinfo in the_tarfile:
+                    if(tarinfo.isreg()):
+                        filepath = tarinfo.name
+                        (directory, filename) = os.path.split(filepath)
+
+                        # Find a .tar.gz file inside the tarball:
+                        file_extensions = (".tar.gz", ".tgz", ".bz2")
+
+                        for ext in file_extensions:
+                            if(filepath.endswith(ext)):
+                                #print_debug( "debug: package: %s, examining nested tarball: %s" % (self.name, filename) )
+
+                                file_object = the_tarfile.extractfile(tarinfo)
+
+                                try:
+                                    #This doesn't work - we get this error:
+                                    # " 'ExFileObject' object has no attribute 'rfind' "
+                                    #
+                                    #tar = tarfile.open(file_object)
+
+                                    #So we do this instead:
+                                    gzipped_data = file_object.read() #Or bzipped.
+                                    filename_local = "/tmp/repository_analyzer_nested_temp.tar" + ext
+                                    localfile = open(filename_local, 'wb')
+                                    localfile.write(gzipped_data)
+                                    localfile.close()
+
+                                except TarError, ex:
+                                    #raise
+                                    print_debug( "tarfile.open() of nested tarball failed: for package: %s, for file: %s: %s" % (self.name, filename, ex) )
+                                    self.license_text = "unknown (error extracting nested tarball)"
+                                    license_found = False
+
+                                try:
+                                    license_found = self.get_license_from_tarball(filename_local)
+                                except  TarError, ex:
+                                    #raise
+                                    print_debug( "tarfile.open() of nested tarball failed: for package: %s, for file: %s: %s" % (self.name, filename, ex) )
+                                    self.license_text = "unknown (error opening extracted nested tarball)"
+                                    license_found = False
+
+            except TarError, ex:
+                 print_debug( "Error while extracting tarball: %s" % str(ex) )
+
+        return license_found;
+
+    # This seems to be the only way to delete a directory without getting exceptions about it not being empty:
+    # I took this from some forum somewhere.
+    # I am surprised that there isn't an easier way. murrayc.
+    def recursive_delete(self, dirname):
+        #print_debug( "debug: recursive_delete(%s)" % dirname )
+        dircache.reset() #Seems to be necessary. Otherwise it sometimes reports incorrect filenames.
+        files = dircache.listdir(dirname)
+        for thefile in files:
+            #print_debug( "  debug: thefile=%s" % thefile )
+            path = os.path.join (dirname, thefile)
+            if os.path.isdir(path):
+                self.recursive_delete(path)
+            else:
+                #print_debug( 'Removing file: "%s"' % path )
+                try:
+                    retval = os.unlink(path)
+                except OSError, ex:
+                    print_debug( "  debug: exception in recursive_delete(self, %s), while unlink path %s" % (dirname, path) )
+                    raise
+
+        #print_debug( 'Removing directory:', dirname )
+        os.rmdir(dirname)
+
+    def get_license_from_diffgz_gzipfile(self, the_gzipfile):
+        license_found = False
+
+        # A .gz file can contain only one file (A .tar.gz can contain multiple files.)
+        try:
+            data = the_gzipfile.read()
+            filename = "temp.diff"
+            filename_local_parent = "/tmp/repository_diff/"
+
+            #Remove any previous temporary files there, and recreate the directory:
+            try:
+                if(os.path.isdir(filename_local_parent)):
+                    self.recursive_delete(filename_local_parent)
+            except IOError, e:
+                print_debug( "Error during removedirs: %s" % str(e) )
+
+            safe_mkdir(filename_local_parent)
+
+            filename_local = filename_local_parent + filename;
+            localfile = open(filename_local, 'wb')
+            localfile.write(data)
+            localfile.close()
+
+            #Expand the directory:
+            # -f makes it ignore warnings, so we only see new files.
+            # -s makes it silent (apart from errors).
+            # &amp;&gt; /dev/null hides errors from stdout, because strange encodings can confuse the terminal, making it show nonsense.
+            command = "cd " + filename_local_parent +"; patch -p0 -f -s &lt; " + filename_local + " &amp;&gt; /dev/null" 
+            #print_debug( "debug: command=%s" % command )
+            os.system(command)
+
+
+            #Examine the files that were created by patch:
+            for root, dirs, files in os.walk(filename_local_parent):
+                for the_file in files:
+                    if(the_file in self.possible_license_files):
+                        the_file_fullpath = os.path.join(root, the_file)
+                        print_debug( "debug: license file found in diff: %s" % the_file_fullpath )
+
+                        try:
+                            fileobject = open(the_file_fullpath)
+                            if(fileobject):
+                                license_found = self.get_license_from_file(fileobject)
+                        except IOError, e:
+                            print_debug( "Could not open file: %s" % the_file_fullpath )
+                            print_debug( "  Exception: %s" % str(e) )
+
+        except IOError, e:
+            print_debug( "Could not read gzipfile %s" % str(e) )
+
+        return license_found;
+
+
+
+    def open_tarball(self, uri):
+        if (uri == ""):
+            self.license_text = "unknown (empty source tarball file URI)"
+            return
+
+        #print_debug( "debug: open_tarball(): uri=%s" % uri )
+
+        # Get the tar.gz tarball data:
+        # Use the httpcache to avoid repeated downloads of the same tarball:
+        try:
+            local_filename = the_httpcache.load(uri)
+        except IOError, e:
+            print_debug( "Could not download %s: %s" % (uri, str(e)) )
+            self.license_text = "unknown (error downloading source tarball file)"
+            return
+
+        #print_debug( "debug: local_filename=%s" % local_filename )
+
+        #Non-httpcache version:
+        ## request = urllib2.Request(uri)
+        ## request.add_header('Accept-encoding', 'gzip')
+        ##
+        ## try:
+        ##     response = urllib2.urlopen(request)
+
+        ##     # get data, and gunzip it if it is encoded
+        ##     gzipped_data = response.read()
+        ##     ##print_debug( "data read" )
+        ##     ##print_debug( "response.headers=%s" % response.headers )
+        ##     ##if 1: #response.headers.get('Content-Encoding', '') == 'gzip':
+        ##     ##   try:
+        ##     ##       data = gzip.GzipFile(fileobj=StringIO.StringIO(gzipped_data)).read()
+        ##     ##    except:
+        ##     ##       print_debug( "GzipFile failed." )
+        ##     ##        data = ''
+        ##
+        ## except urllib2.HTTPError, e:
+        ##      print_debug( "error: Could not open url: %s" % uri )
+        ##         raise
+
+        # Save the gzipped data to a local file:
+        # TODO: Maybe tarfile.open() can open the URI directly, or can directly access the data?
+        # The documentation hints at this, but I can't get it to work. murrayc.
+        #filename_local = "/tmp/repository_analyzer_temp.tar.gz"
+        #open(filename_local, 'wb').write(gzipped_data)
+
+        # Open the local file as a tarfile,
+        # so we can examine its contents:
+
+        # Try opening the file as a .gz or .bz2:
+        # Actually, they always seem to be .tar.gz files.
+        could_open_file = False
+        for open_mode in ("r:gz", "r:bz2"):
+            #print_debug( "trying mode=%s for local_filename=%s" % (open_mode, local_filename) )
+            try:
+                tar = tarfile.open(local_filename, open_mode)
+
+                if(tar):
+                    return tar;
+            except Exception, ex:
+                print_debug( "debug: tarfile open failed with mode=%s for filename=%s" % (open_mode, local_filename) )
+                print_debug( "  ex=%s" % ex )
+                continue
+
+        print_debug( "package=%s Could not open source URI as .gz or .bz2: %s" % (self.name, local_filename) )
+        return
+
+    def open_gzipfile(self, uri):
+        if (uri == ""):
+            return
+
+        # Get the tar.gz tarball data:
+        # Use the httpcache to avoid repeated downloads of the same tarball:
+        try:
+            local_filename = the_httpcache.load(uri)
+        except Exception, e:
+            print_debug( "Could not download %s: %s" % (uri, str(e)) )
+            self.license_text = "unknown (error downloading tarball)"
+            return
+
+        # Open the local file as a gzipfile,
+        # so we can examine its contents:
+
+        # Try opening the file as a .gz or .bz2:
+        # Actually, they always seem to be .tar.gz files.
+        try:
+            gzipped_file = gzip.open(local_filename)
+            if(gzipped_file):
+                return gzipped_file
+        except Exception, ex:
+            print_debug( "debug: gzipfile open failed for filename=%s" % local_filename )
+            print_debug( "  ex=%s" % ex )
+
+        print_debug( "package=%s Could not open diff.gz URI as .gz: %s" % (self.name, local_filename) )
+        return
+
+
+
+
+    def get_license_from_tarball(self, uri):
+        # print_debug( "debug: Trying tarball: %s" % uri )
+        # Based on code in jhbuild's httpcache.py:
+
+        self.license_text = "unknown" #The default
+
+        tar = self.open_tarball(uri)
+        if(tar == None):
+            if(len(self.license_text) == 0):
+                self.license_text = u"unknown (error opening source tarball file)"
+            return False
+
+        license_found = self.get_license_from_tarball_tarfile(tar)
+        tar.close()
+
+        return license_found
+
+
+    def get_license_from_diffgz(self, uri):
+        # Based on code in jhbuild's httpcache.py:
+
+        self.license_text = u"unknown" #The default
+
+        gzipped_file = self.open_gzipfile(uri)
+        if(gzipped_file == None):
+            self.license_text = u"unknown (error opening diff.gz file)"
+            print_debug( "debug: open_tarball(%s) failed." % uri )
+            return False
+
+        license_found = self.get_license_from_diffgz_gzipfile(gzipped_file)
+        gzipped_file.close()
+
+        if(license_found == False):
+            if(len(self.license_text) == 0): #TODO: Is there an empty() for efficiency?
+                self.license_text = u"unknown (error reading from source tarball file)"
+
+        return license_found
+
+
+
+    name = ""
+    source_package_name = ""
+    tarball_uri = ""
+    diff_uri = ""
+    version = ""
+    dependencies = set()
+    license_found = False;
+    license_text = ""
+    license_text_simplified = False; # Whether we extracted a common part of the license, ignoring a unique part.
+
+    # TODO: Be more clever when more than one of these files is present, or at least prioritize them:
+    # In some cases there are multiple licenses because different executables in the tarball are
+    # under different licenses. For instance, flac. In that case, a human must decide.
+    possible_license_files = ("COPYING", "COPYING.LIB", "LICENSE", "LICENCE", "license", "licence", "COPYING.Xiph", "LEGAL.NOTICE", "COPYRIGHT", "COPYRIGHT.TXT", "license.terms", "licence.terms", "Copying", "copying", "copying.lib", "copyright", "LICENSE_1_0.txt", "copyright.in")
+
+
+
+#### From safe_mkdir.py:
+
+# I took this from some forum somewhere.
+# I am surprised that there isn't an easier way. murrayc.
+
+def safe_mkdir(newdir):
+    """works the way a good mkdir should :)
+        - already exists, silently complete
+        - regular file in the way, raise an exception
+        - parent directory(ies) does not exist, make them as well
+    """
+    if os.path.isdir(newdir):
+        pass
+    elif os.path.isfile(newdir):
+        raise OSError("a file with the same name as the desired " \
+                      "dir, '%s', already exists." % newdir)
+    else:
+        head, tail = os.path.split(newdir)
+        if head and not os.path.isdir(head):
+            safe_mkdir(head)
+        #print_debug( "_mkdir %s" % repr(newdir) )
+        if tail:
+            os.mkdir(newdir)
+
+
+
+#### From py:
+
+def escape_text_for_sql(text):
+    # Note that this probably requires Glom 1.0.5, because previous versions can't handle newlines in text fields for example_rows.
+    # Use this as a workaround when using Glom &lt; 1.0.5:
+    # placeholder_newline = "NEWLINE"
+
+    text = text.replace("\n", "\\n");
+
+    #Workaround for the postgres errors about unterminated quoted strings:
+    #text = text.replace("\'", "XsinglequoteX")
+    #text = text.replace("`", "XbackquoteX")
+    #text = text.replace("\"", "XdoublequoteX")
+    #text = text.replace(",", "XcommaX")
+
+    #Escape other characters that must be escaped for postgres:
+    #Single quotes must be quoted as '', but backquotes and double quotes must not.
+    #Not that this text will be further quoted (for XML) when it is written as XML.
+    text = text.replace(u"\'", u"\'\'")
+    text = text.replace(u";",u"\\073")
+    return text
+
+def boolean_for_sql(val):
+    if(val == True):
+        return "TRUE"
+    else:
+        return "FALSE"
+
+def quote_for_sql(text):
+    return "'" + text + "'"
+
+
+
+def get_licenses_map(packages_dict):
+    #Build a map of licenses, so we can list each unique license only once:
+    licenses_map = {}
+
+    for package_name in packages_dict.keys():
+        package_data = packages_dict[package_name]
+        if(package_data.license_text and len(package_data.license_text)): #TODO: Is there an empty() method to save time?
+            # Create a list for this key, if necessary:
+            if(licenses_map.has_key(package_data.license_text) == False):
+                licenses_map[package_data.license_text] = [] # An empty list.
+
+            # Associate the package name with this license text,
+            # along with any other package names already associated with the same license text:
+            licenses_map[package_data.license_text].append(package_data.name)
+
+    return licenses_map
+
+def get_licenses_map_with_matching(out_licenses_map, packages_dict):
+    #For quick debugging of the previous steps:
+    #return False;
+
+    #Examine each license and try to extract common parts,
+    #ignoring small differences such as "XYZ is license under the GPL. Here is the license."
+
+    match_found = False;
+    dict_matching_packages = {}
+    for license_text in out_licenses_map.keys():
+
+        do_exact_match = False #Otherwise, do an approximate match.
+
+        #Don't roughly compare the special "unknown" error license texts.
+        #Compare these exactly instead.
+        package_name_list = out_licenses_map[license_text]
+        package_name_first = package_name_list[0]
+        if(packages_dict[package_name_first].license_found == False):
+            do_exact_match = True
+
+        for other_license_text in out_licenses_map.keys():
+
+            debugwindow.refresh_ui() #Make sure it still reacts.
+
+            #Don't compare to itself:
+            if(other_license_text == license_text):
+                break
+
+            other_do_exact_match = do_exact_match #Otherwise, do an approximate match.
+
+            #Don't roughly compare the special "unknown" error license texts.
+            #Compare these exactly instead.
+            if(other_do_exact_match == False):
+                package_name_list = out_licenses_map[other_license_text]
+                package_name_first = package_name_list[0]
+                if(packages_dict[package_name_first].license_found == False):
+                    other_do_exact_match = True
+
+            this_match_found = False
+            common_text = ""
+            license_name = ""
+
+            if(other_do_exact_match):
+                #Exact comparison:
+                if(license_text == other_license_text):
+                    this_match_found = True
+                    common_text = license_text
+            else:
+
+                #Standard-licenses comparison:
+                license_name = ""
+                if(standard_licenses.get_are_same_standard_license(license_text, other_license_text, license_name)):
+                    this_match_found = True
+                    common_text = license_text #TODO: Use the standard text somehow?.
+                    #print_debug( "  debug: standard license texts found." )
+                else:
+                    #Rough comparison:
+                    matcher = difflib.SequenceMatcher(None, license_text, other_license_text)
+                    if(matcher.ratio() &gt;= 0.95): #quick_ratio() is significantly faster than ratio().
+                        this_match_found = True
+                        common_text = ""
+                        for block in matcher.get_matching_blocks():
+                            (start_a, start_b, count) = block
+                            common_text += license_text[start_a:(start_a + count)]
+
+            if(this_match_found):
+                match_found = True;
+                print_debug( "match found for packages %s and packages %s" % (out_licenses_map[license_text], out_licenses_map[other_license_text]) )
+                #print_debug( "match found: text=%s" % (common_text) )
+
+                for package_name in out_licenses_map[license_text]:
+                    dict_matching_packages[package_name] = common_text
+
+                for package_name in out_licenses_map[other_license_text]:
+                    dict_matching_packages[package_name] = common_text
+
+
+    #Use the matches that were found:
+    for package_name in dict_matching_packages.keys():
+        license_text_common = dict_matching_packages[package_name]
+
+        #Store the simplified license text instaed of the original:
+        packages_dict[package_name].license_text = license_text_common
+        packages_dict[package_name].license_text_simplified = True; #Mark that we did this.
+
+    #Change the contents of the output variable:
+    new_licenses_map = get_licenses_map(packages_dict)
+    out_licenses_map.clear()
+    out_licenses_map.update(new_licenses_map)
+
+    return match_found
+
+
+def get_package_data_list(out_licenses_map):
+
+    #Start with the default config, probably from /etc/apt/sources.list:
+    apt_pkg.InitConfig()
+    apt_pkg.InitSystem()
+
+    #Use a temporary config:
+    config_dir_cache_archives = "./tmp_apt_archives"
+    config_dir_state = "./tmp_apt_varlibapt"  #usually /var/lib/apt
+    config_dir_state_lists =  config_dir_state + "/lists"
+    config_dir_state_status = "./tmp_apt_varlibdpkg" #usually /var/lib/dpkg/
+    config_file_state_status = "./tmp_apt_varlibdpkg/status" #usually /var/lib/dpkg/status
+
+    # Create the temporary directories, because python-apt does not seem to
+    # create them automatically, and throws exceptions.
+    safe_mkdir(config_dir_cache_archives)
+    safe_mkdir(config_dir_cache_archives + "/partial")
+    safe_mkdir(config_dir_state)
+    safe_mkdir(config_dir_state_lists)
+    safe_mkdir(config_dir_state_lists + "/partial")
+    safe_mkdir(config_dir_state_status)
+    tempfile = open(config_file_state_status, 'w') #Touch the file so that it exists, so that libapt does not complain.
+    tempfile.close()
+
+    #Write a temporary sources.list file, for python-apt to use:
+    #TODO: Get this from a separate python script, when glom supports libraries of reusable python scripts.
+    #Or maybe put it in a database table.
+    temp_sourceslist_path = "/tmp/repository_analyzer_sources.list"
+    output = open(temp_sourceslist_path, 'w')
+    sources_list = "deb http://repository.maemo.org/ mistral free non-free\ndeb-src http://repository.maemo.org/ mistral free non-free"
+
+    output.write(sources_list)
+    output.close()
+
+    # Tell apt what sources.list to use.
+    # (See "apt-config dump" for the list of all config keys.)
+    apt_pkg.Config.Set("Dir::Etc::sourcelist", temp_sourceslist_path)
+    apt_pkg.Config.Set("Dir::Cache::archives", config_dir_cache_archives)
+    apt_pkg.Config.Set("Dir::State", config_dir_state)
+    apt_pkg.Config.Set("Dir::State::Lists", config_dir_state_lists)
+    apt_pkg.Config.Set("Dir::State::status", config_file_state_status) #If we don't set this then we will pick up packages from the local system, from the default status file.
+
+
+    #Initialize the return value and the output parameter:
+    packages_dict = {} # A dict.
+    out_licenses_map.clear() #A dict of license text (big) to a list of package names. Note that = {} would assign a new dict, so the caller wouldn't get the contents.
+
+    # Get the list of all packages in the repository.
+    # This depends on your /etc/apt/sources.list
+    cache = apt.Cache()
+
+    print_debug( "Updating apt cache ..." )
+    cache.update() #We could pass a progress object to show feedback.
+    cache.open(apt.progress.OpProgress()) #Shouldn't python-apt's cache.update() do this? Michael Vogt thinks so.
+    print_debug( ".. finished updating apt cache\n" )
+
+    srcrecords = apt_pkg.GetPkgSrcRecords()
+    srcrecords.Restart()
+
+    print_debug( "Number of packages in cache: %d" % len(cache) )
+
+    # Look at each package:
+    i = 0
+    for pkg in cache:
+
+        candver = cache._depcache.GetCandidateVer(pkg._pkg)
+
+        # Ignore packages with no candidate version:
+        if candver == None:
+            continue
+
+        package_data = PackageData(cache, srcrecords, candver) # Retrieves the data from apt.
+        if(package_data.tarball_uri):
+            packages_dict[package_data.name] = package_data
+            print_debug( "Processed package %d: %s" % (i, package_data.name) )
+        #else:
+            # TODO: The if(package_data.tarball_uri) is an old workaround, which it doesn't hurt to keep.
+            # python-apt seems to list files not in the specified sources.list, if Dir::State::status is not set.
+            # and we detect these because there is no source url for them.
+            #print_debug( "Abandoned package %d: %s" % (i, package_data.name) )
+
+        i += 1
+
+    print_debug( "Number of packages used: %d" % len(packages_dict) )
+
+    #for package_data in packages_dict:
+    #   print_debug( package_data.name )
+
+    out_licenses_map_temp = get_licenses_map(packages_dict);
+
+    previous_licenses_count = len(out_licenses_map_temp.keys())
+    initial_previous_licenses_count = previous_licenses_count
+    print_debug( "Number of unique license texts found: %d" % previous_licenses_count )
+    print_debug( "Searching for similar license texts (this can take a long time) ..." )
+
+    #Note that this changes packages_dict and out_licenses_map_temp:
+    matches_found = True;
+    while(matches_found):
+        matches_found = get_licenses_map_with_matching(out_licenses_map_temp, packages_dict)
+        if(matches_found == True):
+            licenses_count = len(out_licenses_map_temp.keys())
+            print_debug( "... Matching again after reducing %d unique licenses to %d ... " % (previous_licenses_count, licenses_count) )
+            previous_licenses_count = licenses_count
+
+    print_debug( "... Finished search for similar license texts: Reduced initial %d licenses to %d." % (initial_previous_licenses_count, previous_licenses_count) )
+
+    #Fill the output parameter:
+    out_licenses_map.clear()
+    out_licenses_map.update(out_licenses_map_temp)
+
+    return packages_dict
+
+
+def debug_create_connection_record():
+    #For debugging, outside of Glom:
+    client = gda.Client()
+
+    data_source_name = "datasource_glomtest"
+
+    data_source = gda.config_find_data_source(data_source_name)
+    if not data_source:
+        print_debug( "debug: Creating the DataSource, because it does not exist yet." )
+
+        # Create it if it does not exist already:
+        data_source = gda.DataSourceInfo()
+        data_source.name = data_source_name
+        data_source.username = "murrayc"
+        data_source.password = "luftballons";     
+        data_source.description = "Test."
+        data_source.provider = "PostgreSQL"
+        # You must specify a database when using PostgreSQL, even when you want to create a database.
+        # template1 always exists.
+        # data_source.cnc_string = "DATABASE=template1";
+        data_source.cnc_string = "DATABASE=glom_repositoryanalyzer28162;HOST=localhost"
+      
+        # TODO: Add save_data_source(data_source_info);
+        gda.config_save_data_source(data_source.name, data_source.provider, data_source.cnc_string, data_source.description, data_source.username, data_source.password)
+
+    gda_connection = client.open_connection(data_source.name, data_source.username, data_source.password)
+    
+    class TestRecord:
+        connection = None
+
+    record = TestRecord()
+    record.connection = gda_connection
+    return record;
+
+
+def execute_sql_query(query_text):
+    #We use encode() here because, when running inside Glom, gda.Command() somehow expects an ascii string and tries to convert the unicode string to ascii, causing exceptions because the conversion does not default to 'replace'.
+    #TODO: Find out why it acts differently inside Glom. This is not a problem when running normally as a standalone script.
+    command = gda.Command(query_text.encode('ascii', 'replace')) 
+    return record.connection.execute_single_command(command)
+
+def is_first_scan():
+    query = "SELECT license_id FROM licenses"
+    datamodel = execute_sql_query(query)
+    if(datamodel and (datamodel.get_n_rows() &gt; 0)):
+        return False
+    else:
+        return True
+
+def main():
+
+    if(is_first_scan() == False):
+        dlg = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK, u"Scan Already Done")
+        dlg.format_secondary_text("License records already exist, suggesting that a previous scan has already been done.")
+        dlg.run()
+        dlg.destroy()
+        return
+
+    #For debugging, outside of Glom:
+    #record = debug_create_connection_record()
+
+
+
+    # Rows of SQL-formatted, comma-separated (fields), newline-separated (rows) example data,
+    # as Glom expects to find in .glom files:
+    #rows_packages = ""
+    #rows_package_dependencies = ""
+    #rows_licenses = ""
+
+    licenses_map = {} # a new dict.
+    packages_dict = get_package_data_list(licenses_map)
+
+
+    empty_text = quote_for_sql("")
+
+    #Look at each key (the license texts):
+    licenses_map_ids = {} # a new dict, of text to ids.
+    license_id = 0
+    for license_text in licenses_map.keys():
+
+        licenses_map_ids[license_text] = license_id #So we can get the license ID later.
+
+        license_description = standard_licenses.get_is_standard_license(license_text) #Returns "" if it is not recognised as a standard license.
+        #If the license text is short (usually an error),
+        #use it for the description to make things clearer:
+        if((len(license_description) == 0) and len(license_text) &lt; 50):
+            license_description = license_text
+
+        # This will look like this:
+        # 'id','description',opensource,'license_text',false,false,false,'creditrequired'
+        license_row = u"%d,%s,false,%s,false,false,false,%s" % (license_id, quote_for_sql(license_description), quote_for_sql(escape_text_for_sql(license_text)),  empty_text)
+        license_id += 1
+
+        #Add the row to the database:
+        query = u"INSERT INTO \"licenses\" (\"license_id\",\"description\",\"open_source\",\"license_text\",\"dynamic_linking_requires_source\",\"static_linking_requires_source\",\"modifications_must_be_released\",\"credit_required\") VALUES (%s)" % license_row
+       
+        #dlg = gtk.MessageDialog(None, 0, gtk.MESSAGE_INFO, gtk.BUTTONS_OK)
+        #dlg.format_secondary_text(query)
+        #ret = dlg.run()
+        #dlg.destroy()
+
+        execute_sql_query(query)
+
+        #rows_licenses += license_row + placeholder_newline #Use a placeholder that we can later convert to an escaped newline, because minidom doesn't do this for us, though it escapes other things.
+
+    print_debug( "count of licenses=%d" % license_id )
+
+    #Look at each package:
+    dependency_id = 0
+    for package_name in packages_dict.keys():
+        #print_debug( "used: ", package_data.name )
+
+
+        license_id = "NULL" #empty integer value.
+
+        package_data = packages_dict[package_name]
+        if(package_data.license_text):
+            try:
+                license_id = licenses_map_ids[package_data.license_text]
+            except:
+                print_debug( "Error while determining license_id." )
+
+        # This will look like this:
+        # 'name','comments','description','license_id',,'version','parent_package','tarball_uri'
+        package_row = u"%s,%s,%s,%s,%s,%s,%s,%s,%s" % ( quote_for_sql(package_data.name), empty_text, quote_for_sql(escape_text_for_sql(package_data.description)), license_id, quote_for_sql(package_data.version), quote_for_sql(package_data.source_package_name), quote_for_sql(package_data.tarball_uri), quote_for_sql(package_data.diff_uri), boolean_for_sql(package_data.license_text_simplified) )
+
+        if(package_row):
+            #Add the row to the database:
+            query = u"INSERT INTO \"packages\" (\"name\",\"comments\",\"description\",\"license_id\",\"version\",\"parent_package\",\"tarball_uri\",\"diff_uri\",\"licensed_simplified\") VALUES (%s)" % package_row
+            execute_sql_query(query)
+
+
+            #rows_packages += package_row + placeholder_newline #Use a placeholder that we can later convert to an escaped newline, because minidom doesn't do this for us, though it escapes other things.
+           
+        # Dependencies:
+
+        if(package_data.dependencies):
+            for dependency in package_data.dependencies:
+
+                # This will look like this:
+                # 'dependency_id', 'dependency_name', 'package_name',
+                dependency_row = u"%d, %s, %s" % (dependency_id, quote_for_sql(dependency), quote_for_sql(package_data.name))
+                dependency_id += 1
+                #rows_package_dependencies += dependency_row + placeholder_newline
+
+                #Add the row to the database:
+                query = u"INSERT INTO \"package_dependencies\" (\"package_dependencies_id\",\"package_name\",\"parent_package_name\") VALUES (%s)" % dependency_row
+                execute_sql_query(query)
+
+
+    debugwindow.debug_button_close.set_sensitive(True) #Let the user close the window. Don't close it automatically, so that they can read it and close when ready.
+
+if __name__ == "__main__":
+    main()
+</script>
+                <formatting/>
+              </data_layout_button>
+            </data_layout_group>
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="description" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="comments" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="version" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="parent_package" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_button title="Open Tarball">
+                <script>uri = record["tarball_uri"]
+
+import urllib2 #Library to do downloads.
+request = urllib2.Request(uri)
+request.add_header('Accept-encoding', 'gzip')
+
+try:
+    response = urllib2.urlopen(request)
+    
+    # get data, and gunzip it if it is encoded
+    gzipped_data = response.read()
+    
+    filename_local = "/tmp/temp.tar.gz"
+    localfile = open(filename_local, 'wb')
+    localfile.write(gzipped_data)
+    localfile.close()
+
+except urllib2.HTTPError, e:
+    print "error: Could not open url: %s" % uri
+    raise
+
+import os
+os.system("file-roller %s&amp;" % filename_local)</script>
+                <formatting/>
+              </data_layout_button>
+              <data_layout_item name="diff_uri" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_button title="Open Diff">
+                <script>#This is a copy/paste of the Open Tarball script.
+
+uri = record["diff_uri"]
+
+import urllib2 #Library to do downloads.
+request = urllib2.Request(uri)
+request.add_header('Accept-encoding', 'gzip')
+
+try:
+    response = urllib2.urlopen(request)
+    
+    # get data, and gunzip it if it is encoded
+    gzipped_data = response.read()
+    
+    filename_local = "/tmp/temp.diff.gz"
+    localfile = open(filename_local, 'wb')
+    localfile.write(gzipped_data)
+    localfile.close()
+
+except urllib2.HTTPError, e:
+    print "error: Could not open url: %s" % uri
+    raise
+
+import os
+os.system("file-roller %s&amp;" % filename_local)</script>
+                <formatting/>
+              </data_layout_button>
+              <data_layout_group name="group_license" title="License">
+                <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="open_source" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_group>
+            <data_layout_notebook name="notebook_related_packages">
+              <data_layout_portal relationship="dependencies">
+                <data_layout_item name="package_name" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="package" related_relationship="license" editable="true" use_default_formatting="true">
+                  <title_custom use_custom="true" title="License Description"/>
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+              <data_layout_portal relationship="dependency of">
+                <data_layout_item name="parent_package_name" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="parent_package" related_relationship="license" use_default_formatting="true">
+                  <title_custom use_custom="true" title="License Description"/>
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_notebook>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+    </data_layouts>
+    <reports/>
+    <print_layouts/>
+  </table>
+  <groups><!--These are only used when recreating a database from an example file. The actual access-control is on the server, of course.-->
+    <group name="glom_developer" developer="true"/>
+  </groups>
+  <library_modules/></glom_document>
