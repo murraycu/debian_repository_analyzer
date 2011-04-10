@@ -36,11 +36,11 @@
       <data_layout name="list" parent_table="licenses">
         <data_layout_groups>
           <data_layout_group name="main">
-            <data_layout_item name="license_id" use_default_formatting="true">
+            <data_layout_item name="license_id" use_default_formatting="true" column_width="40">
               <title_custom/>
               <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
-            <data_layout_item name="open_source" editable="true" use_default_formatting="true">
+            <data_layout_item name="open_source" editable="true" use_default_formatting="true" column_width="50">
               <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="description" editable="true" use_default_formatting="true">
@@ -402,20 +402,7 @@ if __name__ == "__main__":
     <print_layouts/>
   </table>
   <table name="package_scans" title="Package Scans">
-    <example_rows>
-      <example_row>
-        <value column="package_scan_id">0</value>
-        <value column="comments"/>
-        <value column="license_id"/>
-        <value column="version"/>
-        <value column="parent_package"/>
-        <value column="tarball_uri"/>
-        <value column="diff_uri"/>
-        <value column="licensed_simplified">FALSE</value>
-        <value column="scan_id"/>
-        <value column="package_name"/>
-      </example_row>
-    </example_rows>
+    <example_rows/>
     <fields>
       <field name="package_scan_id" primary_key="true" unique="true" auto_increment="true" type="Number" title="Package Scan ID">
         <formatting format_decimal_places="2" choices_related_show_all="true"/>
@@ -2083,7 +2070,8 @@ def get_package_data_list(out_licenses_map, package_names_list_restrict_to):
     #Or maybe put it in a database table.
     temp_sourceslist_path = "/tmp/repository_analyzer_sources.list"
     output = open(temp_sourceslist_path, 'w')
-    sources_list = "deb http://repository.maemo.org/extras-devel fremantle free non-free\ndeb-src http://repository.maemo.org/extras-devel fremantle free"
+    sources_list = "deb http://repository.maemo.org/ fremantle/sdk free non-free\ndeb-src http://repository.maemo.org/ fremantle/sdk free\ndeb http://repository.maemo.org/ fremantle/tools free non-free\ndeb-src http://repository.maemo.org/ fremantle/tools free\ndeb http://repository.maemo.org/extras-devel/ fremantle free non-free\ndeb-src http://repository.maemo.org/extras-devel/ fremantle free non-free
+"
 
     output.write(sources_list)
     output.close()
