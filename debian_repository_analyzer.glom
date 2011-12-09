@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<glom_document xmlns="http://glom.org/glom_document" database_title="Repository Analyzer" is_example="true" translation_original_locale="en_US" format_version="7">
-  <connection database="glom_repositoryanalyzer3121" server="localhost" hosting_mode="postgres_self" port="5433" try_other_ports="false"/>
+<glom_document xmlns="http://glom.org/glom_document" database_title="Repository Analyzer" is_example="true" translation_original_locale="en_US" format_version="6">
+  <connection database="glom_repositoryanalyzer3121" server="localhost" hosting_mode="postgres_self" port="5434" try_other_ports="false"/>
   <table name="licenses" title="Licenses">
-    <example_rows/>
     <fields>
       <field name="license_id" primary_key="true" unique="true" type="Number" title="License ID">
-        <formatting format_decimal_places="2" choices_related="true"/>
+        <formatting format_decimal_places="2" choices_related="true" choices_related_show_all="true"/>
       </field>
       <field name="description" type="Text" title="Description">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="open_source" default_value="FALSE" type="Boolean" title="Open Source">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="license_text" type="Text" title="License Text">
-        <formatting format_text_multiline="true"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="dynamic_linking_requires_source" default_value="FALSE" type="Boolean" title="Dynamic Linking Requires Source Release">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="static_linking_requires_source" default_value="FALSE" type="Boolean" title="Static Linking Requires Source Release">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="modifications_must_be_released" default_value="FALSE" type="Boolean" title="Modifications Must Be Released">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="credit_required" type="Text" title="Credit Required">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
     </fields>
     <relationships>
@@ -38,31 +37,32 @@
           <data_layout_group name="main">
             <data_layout_item name="license_id" use_default_formatting="true" column_width="40">
               <title_custom/>
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="open_source" editable="true" use_default_formatting="true" column_width="50">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="description" editable="true" use_default_formatting="true">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
             </data_layout_item>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
       <data_layout name="details" parent_table="licenses">
         <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="license_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" columns_count="2" title="Details">
-            <data_layout_item name="description" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_group name="button_group">
-              <data_layout_button title="Remove As Duplicate">
-                <script># example helloworld.py
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+            </data_layout_group>
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="description" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_group name="button_group">
+                <data_layout_button title="Remove As Duplicate">
+                  <script># example helloworld.py
 
 import pygtk
 pygtk.require('2.0')
@@ -209,30 +209,45 @@ if __name__ == "__main__":
 
  
 </script>
-                <formatting/>
-              </data_layout_button>
-              <data_layout_text>
-                <text/>
-                <formatting/>
-              </data_layout_text>
+                  <formatting/>
+                </data_layout_button>
+                <data_layout_text>
+                  <text/>
+                  <formatting/>
+                </data_layout_text>
+              </data_layout_group>
+              <data_layout_group name="characteristics" title="Characteristics">
+                <data_layout_item name="open_source" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="dynamic_linking_requires_source" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="static_linking_requires_source" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="modifications_must_be_released" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="credit_required" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
             </data_layout_group>
-            <data_layout_group name="characteristics" title="Characteristics">
-              <data_layout_item name="open_source" editable="true" use_default_formatting="true">
-                <formatting/>
+            <data_layout_item name="license_text" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_portal relationship="packages_scans" portal_rows_count="6">
+              <data_layout_item name="package_name" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="dynamic_linking_requires_source" editable="true" use_default_formatting="true">
-                <formatting/>
+              <data_layout_item name="scan_id" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="static_linking_requires_source" editable="true" use_default_formatting="true">
-                <formatting/>
+              <data_layout_item name="version" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="modifications_must_be_released" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-              <data_layout_item name="credit_required" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-            </data_layout_group>
+            </data_layout_portal>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
@@ -241,10 +256,9 @@ if __name__ == "__main__":
     <print_layouts/>
   </table>
   <table name="package_dependencies" hidden="true" title="Package Dependencies">
-    <example_rows/>
     <fields>
       <field name="package_dependency_id" primary_key="true" unique="true" auto_increment="true" type="Number" title="Package Dependencies ID">
-        <formatting format_thousands_separator="true" format_decimal_places="2"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="package_scan_id" type="Number" title="Package Scan ID">
         <formatting format_thousands_separator="true" format_decimal_places="2" choices_related="true" choices_related_relationship="package_scan" choices_related_field="package_scan_id" choices_related_show_all="true">
@@ -260,7 +274,7 @@ if __name__ == "__main__":
         </formatting>
       </field>
       <field name="parent_package_scan_id" type="Number" title="Parent Package Scan ID">
-        <formatting format_thousands_separator="true" format_decimal_places="2"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
     </fields>
     <relationships>
@@ -270,25 +284,27 @@ if __name__ == "__main__":
     <data_layouts>
       <data_layout name="details" parent_table="package_dependencies">
         <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="package_dependency_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" columns_count="2" title="Details">
-            <data_layout_item name="parent_package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-            <data_layout_item name="package_name" relationship="parent_package_scan" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_group name="package">
-              <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="package_dependency_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="package_name" relationship="package_scan" editable="true" use_default_formatting="true">
-                <formatting/>
+            </data_layout_group>
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="parent_package_scan_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
               </data_layout_item>
+              <data_layout_item name="package_name" relationship="parent_package_scan" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_group name="package">
+                <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="package_name" relationship="package_scan" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
             </data_layout_group>
           </data_layout_group>
         </data_layout_groups>
@@ -297,13 +313,13 @@ if __name__ == "__main__":
         <data_layout_groups>
           <data_layout_group name="main">
             <data_layout_item name="package_dependency_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="parent_package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
           </data_layout_group>
         </data_layout_groups>
@@ -313,16 +329,15 @@ if __name__ == "__main__":
     <print_layouts/>
   </table>
   <table name="packages" title="Packages">
-    <example_rows/>
     <fields>
       <field name="name" primary_key="true" unique="true" type="Text" title="Name">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="description" type="Text" title="Description">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="comments" type="Text" title="Comments">
-        <formatting format_text_multiline="true"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
     </fields>
     <relationships>
@@ -333,47 +348,49 @@ if __name__ == "__main__":
         <data_layout_groups>
           <data_layout_group name="main">
             <data_layout_item name="name" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="description" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="comments" editable="true" use_default_formatting="true">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
             </data_layout_item>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
       <data_layout name="details" parent_table="packages">
         <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="name" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" title="Details">
-            <data_layout_item name="description" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="comments" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_portal relationship="package_scans" portal_rows_count_min="6" portal_rows_count_max="6">
-              <data_layout_item name="scan_id" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="name" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="date" relationship="scans" use_default_formatting="true">
-                <title_custom use_custom="true" title="Scan Date"/>
-                <formatting/>
+            </data_layout_group>
+            <data_layout_group name="details" title="Details">
+              <data_layout_item name="description" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="version" use_default_formatting="true">
-                <formatting/>
+              <data_layout_item name="comments" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="description" relationship="license" use_default_formatting="true">
-                <title_custom use_custom="true" title="License Description"/>
-                <formatting/>
-              </data_layout_item>
-            </data_layout_portal>
+              <data_layout_portal relationship="package_scans" portal_rows_count="6">
+                <data_layout_item name="scan_id" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="date" relationship="scans" use_default_formatting="true">
+                  <title_custom use_custom="true" title="Scan Date"/>
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="version" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" use_default_formatting="true">
+                  <title_custom use_custom="true" title="License Description"/>
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_group>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
@@ -382,13 +399,12 @@ if __name__ == "__main__":
     <print_layouts/>
   </table>
   <table name="package_scans" title="Package Scans">
-    <example_rows/>
     <fields>
       <field name="package_scan_id" primary_key="true" unique="true" auto_increment="true" type="Number" title="Package Scan ID">
-        <formatting format_decimal_places="2"/>
+        <formatting format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="comments" type="Text" title="Comments">
-        <formatting format_text_multiline="true" choices_related="true"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="6" choices_related="true" choices_related_show_all="true"/>
       </field>
       <field name="license_id" type="Number" title="License ID">
         <formatting format_decimal_places="2" choices_related="true" choices_related_relationship="license" choices_related_field="license_id" choices_related_show_all="true">
@@ -396,7 +412,7 @@ if __name__ == "__main__":
             <data_layout_groups>
               <data_layout_group>
                 <data_layout_item name="description" editable="true" use_default_formatting="true">
-                  <formatting/>
+                  <formatting format_text_multiline_height_lines="6" choices_related_show_all="true"/>
                 </data_layout_item>
               </data_layout_group>
             </data_layout_groups>
@@ -404,25 +420,25 @@ if __name__ == "__main__":
         </formatting>
       </field>
       <field name="version" type="Text" title="Version">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="parent_package" type="Text" title="Parent Package">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="tarball_uri" type="Text" title="Tarball URI">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="diff_uri" type="Text" title="Diff URI">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
       <field name="licensed_simplified" default_value="FALSE" type="Boolean" title="Licenses Simplified Automatically">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="scan_id" type="Number" title="Scan ID">
-        <formatting format_decimal_places="2" choices_related="true"/>
+        <formatting format_decimal_places="2" choices_related="true" choices_related_show_all="true"/>
       </field>
       <field name="package_name" type="Text" title="Package Name">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
       </field>
     </fields>
     <relationships>
@@ -435,27 +451,29 @@ if __name__ == "__main__":
     <data_layouts>
       <data_layout name="details" parent_table="package">
         <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" title="Details">
-            <data_layout_group name="license" title="License">
-              <data_layout_item name="license_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-              <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
-                <formatting/>
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
               </data_layout_item>
             </data_layout_group>
-          </data_layout_group>
-          <data_layout_group name="Dependencies">
-            <data_layout_portal relationship="dependencies" portal_rows_count_min="6" portal_rows_count_max="6">
-              <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-            </data_layout_portal>
+            <data_layout_group name="details" title="Details">
+              <data_layout_group name="license" title="License">
+                <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+            </data_layout_group>
+            <data_layout_group name="Dependencies">
+              <data_layout_portal relationship="dependencies" portal_rows_count="6">
+                <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_group>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
@@ -463,181 +481,34 @@ if __name__ == "__main__":
         <data_layout_groups>
           <data_layout_group name="main">
             <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="version" editable="true" use_default_formatting="true">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
             </data_layout_item>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
       <data_layout name="details" parent_table="packages">
         <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" columns_count="2" title="Details">
-            <data_layout_item name="comments" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="version" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="parent_package" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_button title="Open Tarball">
-              <script>uri = record["tarball_uri"]
-
-import urllib2 #Library to do downloads.
-request = urllib2.Request(uri)
-request.add_header('Accept-encoding', 'gzip')
-
-try:
-    response = urllib2.urlopen(request)
-    
-    # get data, and gunzip it if it is encoded
-    gzipped_data = response.read()
-    
-    filename_local = "/tmp/temp.tar.gz"
-    localfile = open(filename_local, 'wb')
-    localfile.write(gzipped_data)
-    localfile.close()
-
-except urllib2.HTTPError, e:
-    print "error: Could not open url: %s" % uri
-    raise
-
-import os
-os.system("file-roller %s&amp;" % filename_local)</script>
-              <formatting/>
-            </data_layout_button>
-            <data_layout_item name="diff_uri" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_button title="Open Diff">
-              <script>#This is a copy/paste of the Open Tarball script.
-
-uri = record["diff_uri"]
-
-import urllib2 #Library to do downloads.
-request = urllib2.Request(uri)
-request.add_header('Accept-encoding', 'gzip')
-
-try:
-    response = urllib2.urlopen(request)
-    
-    # get data, and gunzip it if it is encoded
-    gzipped_data = response.read()
-    
-    filename_local = "/tmp/temp.diff.gz"
-    localfile = open(filename_local, 'wb')
-    localfile.write(gzipped_data)
-    localfile.close()
-
-except urllib2.HTTPError, e:
-    print "error: Could not open url: %s" % uri
-    raise
-
-import os
-os.system("file-roller %s&amp;" % filename_local)</script>
-              <formatting/>
-            </data_layout_button>
-            <data_layout_group name="group_license" title="License">
-              <data_layout_item name="license_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-              <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-              <data_layout_item name="open_source" relationship="license" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-              <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-            </data_layout_group>
-          </data_layout_group>
-        </data_layout_groups>
-      </data_layout>
-      <data_layout name="list" parent_table="package_scans">
-        <data_layout_groups>
           <data_layout_group name="main">
-            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true" column_width="40">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-            <data_layout_item name="package_name" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="comments" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="license_id" editable="true" use_default_formatting="true" column_width="40">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-            <data_layout_item name="version" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="parent_package" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="diff_uri" editable="true" use_default_formatting="true" column_width="103">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true" column_width="50">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-          </data_layout_group>
-        </data_layout_groups>
-      </data_layout>
-      <data_layout name="details" parent_table="package_scans">
-        <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-            <data_layout_item name="package_name" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" columns_count="2" title="Details">
-            <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-            <data_layout_item name="comments" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="version" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="parent_package" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_group name="group" title="License">
-              <data_layout_item name="license_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-              <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-              <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true">
-                <formatting/>
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
               </data_layout_item>
             </data_layout_group>
-            <data_layout_group name="tarball" title="Tarball">
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="comments" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="version" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="parent_package" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
               <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true">
-                <formatting/>
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
               <data_layout_button title="Open Tarball">
                 <script>uri = record["tarball_uri"]
@@ -665,10 +536,8 @@ import os
 os.system("file-roller %s&amp;" % filename_local)</script>
                 <formatting/>
               </data_layout_button>
-            </data_layout_group>
-            <data_layout_group name="diff" title="Diff">
               <data_layout_item name="diff_uri" editable="true" use_default_formatting="true">
-                <formatting/>
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
               <data_layout_button title="Open Diff">
                 <script>#This is a copy/paste of the Open Tarball script.
@@ -698,7 +567,208 @@ import os
 os.system("file-roller %s&amp;" % filename_local)</script>
                 <formatting/>
               </data_layout_button>
+              <data_layout_group name="group_license" title="License">
+                <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="open_source" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
             </data_layout_group>
+            <data_layout_notebook name="notebook_related_packages">
+              <data_layout_portal relationship="dependencies" portal_rows_count="6">
+                <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="package_scan" related_relationship="license" editable="true" use_default_formatting="true">
+                  <title_custom use_custom="true" title="License Description"/>
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+              <data_layout_portal relationship="dependency of" portal_rows_count="6">
+                <data_layout_item name="parent_package_scan_id" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="parent_package_scan" use_default_formatting="true">
+                  <title_custom use_custom="true" title="License Description"/>
+                  <formatting/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_notebook>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+      <data_layout name="list" parent_table="package_scans">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true" column_width="40">
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="package_name" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="comments" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="license_id" editable="true" use_default_formatting="true" column_width="40">
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="version" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="parent_package" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="diff_uri" editable="true" use_default_formatting="true" column_width="103">
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true" column_width="50">
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+            </data_layout_item>
+            <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+            </data_layout_item>
+          </data_layout_group>
+        </data_layout_groups>
+      </data_layout>
+      <data_layout name="details" parent_table="package_scans">
+        <data_layout_groups>
+          <data_layout_group name="main">
+            <data_layout_text>
+              <text title="This is the information about one package at the time of a particular scan."/>
+              <formatting/>
+            </data_layout_text>
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="package_name" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+            </data_layout_group>
+            <data_layout_group name="details" columns_count="2" title="Details">
+              <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="comments" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="version" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="parent_package" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_group name="group" title="License">
+                <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_group>
+              <data_layout_group name="tarball" title="Tarball">
+                <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_button title="Open Tarball">
+                  <script>uri = record["tarball_uri"]
+
+import urllib2 #Library to do downloads.
+request = urllib2.Request(uri)
+request.add_header('Accept-encoding', 'gzip')
+
+try:
+    response = urllib2.urlopen(request)
+    
+    # get data, and gunzip it if it is encoded
+    gzipped_data = response.read()
+    
+    filename_local = "/tmp/temp.tar.gz"
+    localfile = open(filename_local, 'wb')
+    localfile.write(gzipped_data)
+    localfile.close()
+
+except urllib2.HTTPError, e:
+    print "error: Could not open url: %s" % uri
+    raise
+
+import os
+os.system("file-roller %s&amp;" % filename_local)</script>
+                  <formatting/>
+                </data_layout_button>
+              </data_layout_group>
+              <data_layout_group name="diff" title="Diff">
+                <data_layout_item name="diff_uri" editable="true" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_button title="Open Diff">
+                  <script>#This is a copy/paste of the Open Tarball script.
+
+uri = record["diff_uri"]
+
+import urllib2 #Library to do downloads.
+request = urllib2.Request(uri)
+request.add_header('Accept-encoding', 'gzip')
+
+try:
+    response = urllib2.urlopen(request)
+    
+    # get data, and gunzip it if it is encoded
+    gzipped_data = response.read()
+    
+    filename_local = "/tmp/temp.diff.gz"
+    localfile = open(filename_local, 'wb')
+    localfile.write(gzipped_data)
+    localfile.close()
+
+except urllib2.HTTPError, e:
+    print "error: Could not open url: %s" % uri
+    raise
+
+import os
+os.system("file-roller %s&amp;" % filename_local)</script>
+                  <formatting/>
+                </data_layout_button>
+              </data_layout_group>
+            </data_layout_group>
+            <data_layout_notebook name="notebook">
+              <data_layout_portal relationship="dependencies" portal_rows_count="6">
+                <data_layout_item name="name" relationship="package_scan" related_relationship="package" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="version" relationship="package_scan" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="package_scan" related_relationship="license" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+              <data_layout_portal relationship="dependency of" portal_rows_count="6">
+                <data_layout_item name="name" relationship="parent_package_scan" related_relationship="package" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="version" relationship="package_scan" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="package_scan" related_relationship="license" use_default_formatting="true">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_notebook>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
@@ -707,22 +777,21 @@ os.system("file-roller %s&amp;" % filename_local)</script>
     <print_layouts/>
   </table>
   <table name="scans" default="true" title="Scans">
-    <example_rows/>
     <fields>
       <field name="scan_id" primary_key="true" unique="true" auto_increment="true" type="Number" title="Scan ID">
-        <formatting format_decimal_places="2" choices_related="true"/>
+        <formatting format_decimal_places="2" choices_related="true" choices_related_show_all="true"/>
       </field>
       <field name="comments" type="Text" title="Comments">
-        <formatting format_text_multiline="true" format_text_multiline_height_lines="4"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="4" choices_related_show_all="true"/>
       </field>
       <field name="date" type="Date" title="Date">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="time" type="Time" title="Time">
-        <formatting/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
       </field>
       <field name="package_xml_contents" type="Text" title="Package XML Contents (optional)">
-        <formatting format_text_multiline="true" format_text_multiline_height_lines="10"/>
+        <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline="true" format_text_multiline_height_lines="10" choices_related_show_all="true"/>
       </field>
     </fields>
     <relationships>
@@ -733,34 +802,35 @@ os.system("file-roller %s&amp;" % filename_local)</script>
         <data_layout_groups>
           <data_layout_group name="main">
             <data_layout_item name="scan_id" editable="true" use_default_formatting="true" column_width="40">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="date" editable="true" use_default_formatting="true" column_width="28">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="time" editable="true" use_default_formatting="true" column_width="30">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
             </data_layout_item>
             <data_layout_item name="comments" editable="true" use_default_formatting="true">
-              <formatting/>
+              <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
             </data_layout_item>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
       <data_layout name="details" parent_table="scans">
         <data_layout_groups>
-          <data_layout_group name="overview" columns_count="2" title="Overview">
-            <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
-              <formatting format_thousands_separator="true" format_decimal_places="2"/>
-            </data_layout_item>
-            <data_layout_item name="date" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_item name="time" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-            <data_layout_button title="Begin Scan">
-              <script>#!/usr/bin/env python
+          <data_layout_group name="main">
+            <data_layout_group name="overview" columns_count="2" title="Overview">
+              <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="date" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_item name="time" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+              </data_layout_item>
+              <data_layout_button title="Begin Scan">
+                <script>#!/usr/bin/env python
 
 #
 # Copyright (c) 2006-2011 Openismus GmbH
@@ -2496,28 +2566,29 @@ def main():
 
 if __name__ == "__main__":
     main()</script>
-              <formatting/>
-            </data_layout_button>
-            <data_layout_item name="comments" editable="true" use_default_formatting="true">
-              <formatting/>
-            </data_layout_item>
-          </data_layout_group>
-          <data_layout_group name="details" title="Details">
-            <data_layout_portal relationship="package_scans" portal_rows_count_min="6" portal_rows_count_max="6" column_line_color="#000000000000" line_color="#000000000000">
-              <data_layout_item name="package_scan_id" use_default_formatting="true" column_width="40">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-              <data_layout_item name="package_name" use_default_formatting="true" column_width="103">
                 <formatting/>
+              </data_layout_button>
+              <data_layout_item name="comments" editable="true" use_default_formatting="true">
+                <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
               </data_layout_item>
-              <data_layout_item name="description" relationship="package" use_default_formatting="true" column_width="103">
-                <formatting/>
-              </data_layout_item>
-              <data_layout_item name="description" relationship="license" use_default_formatting="true">
-                <title_custom use_custom="true" title="License"/>
-                <formatting/>
-              </data_layout_item>
-            </data_layout_portal>
+            </data_layout_group>
+            <data_layout_group name="details" title="Details">
+              <data_layout_portal relationship="package_scans" portal_rows_count="10" column_line_color="#000000000000" line_color="#000000000000">
+                <data_layout_item name="package_scan_id" use_default_formatting="true" column_width="40">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="package_name" use_default_formatting="true" column_width="103">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="package" use_default_formatting="true" column_width="103">
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+                <data_layout_item name="description" relationship="license" use_default_formatting="true">
+                  <title_custom use_custom="true" title="License"/>
+                  <formatting format_thousands_separator="true" format_decimal_places="2" format_text_multiline_height_lines="6" choices_related_show_all="true"/>
+                </data_layout_item>
+              </data_layout_portal>
+            </data_layout_group>
           </data_layout_group>
         </data_layout_groups>
       </data_layout>
