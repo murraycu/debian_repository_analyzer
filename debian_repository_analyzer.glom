@@ -51,19 +51,18 @@
       </data_layout>
       <data_layout name="details" parent_table="licenses">
         <data_layout_groups>
-          <data_layout_group name="main">
-            <data_layout_group name="overview" columns_count="2" title="Overview">
-              <data_layout_item name="license_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-            </data_layout_group>
-            <data_layout_group name="details" columns_count="2" title="Details">
-              <data_layout_item name="description" editable="true" use_default_formatting="true">
-                <formatting/>
-              </data_layout_item>
-              <data_layout_group name="button_group">
-                <data_layout_button title="Remove As Duplicate">
-                  <script># example helloworld.py
+          <data_layout_group name="overview" columns_count="2" title="Overview">
+            <data_layout_item name="license_id" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+            </data_layout_item>
+          </data_layout_group>
+          <data_layout_group name="details" columns_count="2" title="Details">
+            <data_layout_item name="description" editable="true" use_default_formatting="true">
+              <formatting/>
+            </data_layout_item>
+            <data_layout_group name="button_group">
+              <data_layout_button title="Remove As Duplicate">
+                <script># example helloworld.py
 
 import pygtk
 pygtk.require('2.0')
@@ -210,31 +209,32 @@ if __name__ == "__main__":
 
  
 </script>
-                  <formatting/>
-                </data_layout_button>
-                <data_layout_text>
-                  <text/>
-                  <formatting/>
-                </data_layout_text>
-              </data_layout_group>
-              <data_layout_group name="characteristics" title="Characteristics">
-                <data_layout_item name="open_source" editable="true" use_default_formatting="true">
-                  <formatting/>
-                </data_layout_item>
-                <data_layout_item name="dynamic_linking_requires_source" editable="true" use_default_formatting="true">
-                  <formatting/>
-                </data_layout_item>
-                <data_layout_item name="static_linking_requires_source" editable="true" use_default_formatting="true">
-                  <formatting/>
-                </data_layout_item>
-                <data_layout_item name="modifications_must_be_released" editable="true" use_default_formatting="true">
-                  <formatting/>
-                </data_layout_item>
-                <data_layout_item name="credit_required" editable="true" use_default_formatting="true">
-                  <formatting/>
-                </data_layout_item>
-              </data_layout_group>
+                <formatting/>
+              </data_layout_button>
+              <data_layout_text>
+                <text/>
+                <formatting/>
+              </data_layout_text>
             </data_layout_group>
+            <data_layout_group name="characteristics" title="Characteristics">
+              <data_layout_item name="open_source" editable="true" use_default_formatting="true">
+                <formatting/>
+              </data_layout_item>
+              <data_layout_item name="dynamic_linking_requires_source" editable="true" use_default_formatting="true">
+                <formatting/>
+              </data_layout_item>
+              <data_layout_item name="static_linking_requires_source" editable="true" use_default_formatting="true">
+                <formatting/>
+              </data_layout_item>
+              <data_layout_item name="modifications_must_be_released" editable="true" use_default_formatting="true">
+                <formatting/>
+              </data_layout_item>
+              <data_layout_item name="credit_required" editable="true" use_default_formatting="true">
+                <formatting/>
+              </data_layout_item>
+            </data_layout_group>
+          </data_layout_group>
+          <data_layout_group name="other">
             <data_layout_item name="license_text" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
@@ -286,27 +286,25 @@ if __name__ == "__main__":
     <data_layouts>
       <data_layout name="details" parent_table="package_dependencies">
         <data_layout_groups>
-          <data_layout_group name="main">
-            <data_layout_group name="overview" columns_count="2" title="Overview">
-              <data_layout_item name="package_dependency_id" editable="true" use_default_formatting="true">
+          <data_layout_group name="overview" columns_count="2" title="Overview">
+            <data_layout_item name="package_dependency_id" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+            </data_layout_item>
+          </data_layout_group>
+          <data_layout_group name="details" columns_count="2" title="Details">
+            <data_layout_item name="parent_package_scan_id" editable="true" use_default_formatting="true">
+              <formatting format_thousands_separator="true" format_decimal_places="2"/>
+            </data_layout_item>
+            <data_layout_item name="package_name" relationship="parent_package_scan" editable="true" use_default_formatting="true">
+              <formatting/>
+            </data_layout_item>
+            <data_layout_group name="package">
+              <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
                 <formatting format_thousands_separator="true" format_decimal_places="2"/>
               </data_layout_item>
-            </data_layout_group>
-            <data_layout_group name="details" columns_count="2" title="Details">
-              <data_layout_item name="parent_package_scan_id" editable="true" use_default_formatting="true">
-                <formatting format_thousands_separator="true" format_decimal_places="2"/>
-              </data_layout_item>
-              <data_layout_item name="package_name" relationship="parent_package_scan" editable="true" use_default_formatting="true">
+              <data_layout_item name="package_name" relationship="package_scan" editable="true" use_default_formatting="true">
                 <formatting/>
               </data_layout_item>
-              <data_layout_group name="package">
-                <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
-                  <formatting format_thousands_separator="true" format_decimal_places="2"/>
-                </data_layout_item>
-                <data_layout_item name="package_name" relationship="package_scan" editable="true" use_default_formatting="true">
-                  <formatting/>
-                </data_layout_item>
-              </data_layout_group>
             </data_layout_group>
           </data_layout_group>
         </data_layout_groups>
