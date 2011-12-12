@@ -36,11 +36,11 @@
       <data_layout name="list" parent_table="licenses">
         <data_layout_groups>
           <data_layout_group name="main">
-            <data_layout_item name="license_id" use_default_formatting="true" column_width="40">
+            <data_layout_item name="license_id" use_default_formatting="true">
               <title_custom/>
               <formatting format_thousands_separator="true" format_decimal_places="2"/>
             </data_layout_item>
-            <data_layout_item name="open_source" editable="true" use_default_formatting="true" column_width="50">
+            <data_layout_item name="open_source" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
             <data_layout_item name="description" editable="true" use_default_formatting="true">
@@ -348,10 +348,10 @@ if __name__ == "__main__":
       <data_layout name="list" parent_table="packages">
         <data_layout_groups>
           <data_layout_group name="main">
-            <data_layout_item name="name" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="name" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="description" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="description" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
             <data_layout_item name="comments" editable="true" use_default_formatting="true">
@@ -608,31 +608,31 @@ os.system("file-roller %s&amp;" % filename_local)</script>
       <data_layout name="list" parent_table="package_scans">
         <data_layout_groups>
           <data_layout_group name="main">
-            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true" column_width="40">
+            <data_layout_item name="package_scan_id" editable="true" use_default_formatting="true">
               <formatting format_thousands_separator="true" format_decimal_places="2"/>
             </data_layout_item>
-            <data_layout_item name="package_name" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="package_name" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="comments" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="comments" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="license_id" editable="true" use_default_formatting="true" column_width="40">
+            <data_layout_item name="license_id" editable="true" use_default_formatting="true">
               <formatting format_thousands_separator="true" format_decimal_places="2"/>
             </data_layout_item>
-            <data_layout_item name="version" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="version" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="parent_package" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="parent_package" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="tarball_uri" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="diff_uri" editable="true" use_default_formatting="true" column_width="103">
+            <data_layout_item name="diff_uri" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true" column_width="50">
+            <data_layout_item name="licensed_simplified" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
             <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
@@ -802,13 +802,13 @@ os.system("file-roller %s&amp;" % filename_local)</script>
       <data_layout name="list" parent_table="scans">
         <data_layout_groups>
           <data_layout_group name="main">
-            <data_layout_item name="scan_id" editable="true" use_default_formatting="true" column_width="40">
+            <data_layout_item name="scan_id" editable="true" use_default_formatting="true">
               <formatting format_thousands_separator="true" format_decimal_places="2"/>
             </data_layout_item>
-            <data_layout_item name="date" editable="true" use_default_formatting="true" column_width="28">
+            <data_layout_item name="date" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
-            <data_layout_item name="time" editable="true" use_default_formatting="true" column_width="30">
+            <data_layout_item name="time" editable="true" use_default_formatting="true">
               <formatting/>
             </data_layout_item>
             <data_layout_item name="comments" editable="true" use_default_formatting="true">
@@ -2574,13 +2574,13 @@ if __name__ == "__main__":
           </data_layout_group>
           <data_layout_group name="details" title="Details">
             <data_layout_portal relationship="package_scans" portal_rows_count_min="6" portal_rows_count_max="6" column_line_color="#000000000000" line_color="#000000000000">
-              <data_layout_item name="package_scan_id" use_default_formatting="true" column_width="40">
+              <data_layout_item name="package_scan_id" use_default_formatting="true">
                 <formatting format_thousands_separator="true" format_decimal_places="2"/>
               </data_layout_item>
-              <data_layout_item name="package_name" use_default_formatting="true" column_width="103">
+              <data_layout_item name="package_name" use_default_formatting="true">
                 <formatting/>
               </data_layout_item>
-              <data_layout_item name="description" relationship="package" use_default_formatting="true" column_width="103">
+              <data_layout_item name="description" relationship="package" use_default_formatting="true">
                 <formatting/>
               </data_layout_item>
               <data_layout_item name="description" relationship="license" use_default_formatting="true">
